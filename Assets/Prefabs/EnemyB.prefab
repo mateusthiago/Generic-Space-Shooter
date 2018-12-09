@@ -19,12 +19,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4369133990881790}
-  - component: {fileID: 212258831475329502}
   - component: {fileID: 114987411047805182}
   - component: {fileID: 114581574766348424}
+  - component: {fileID: 212258831475329502}
   - component: {fileID: 82377511702228276}
-  - component: {fileID: 60326769012958964}
-  - component: {fileID: 114295634295865660}
+  - component: {fileID: 70309470093209462}
   m_Layer: 10
   m_Name: EnemyB
   m_TagString: Untagged
@@ -39,14 +38,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1990085902274210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0.17416197, y: 0.9715709, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &60326769012958964
-PolygonCollider2D:
+--- !u!70 &70309470093209462
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -57,33 +56,9 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.97, y: 0.84}
-    newSize: {x: 1.04, y: 0.84}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.41828236, y: 0.2585628}
-      - {x: 0.46212533, y: 0.40475035}
-      - {x: 0.18696734, y: 0.22184515}
-      - {x: 0.003124401, y: 0.28475022}
-      - {x: -0.19074923, y: 0.22897029}
-      - {x: -0.47165644, y: 0.4066565}
-      - {x: -0.26687562, y: -0.3061874}
-      - {x: -0.17968914, y: -0.3114066}
-      - {x: -0.10496935, y: -0.40475035}
-      - {x: 0.110219106, y: -0.40475035}
-      - {x: 0.1487818, y: -0.36809397}
-      - {x: 0.16109583, y: -0.3018756}
-      - {x: 0.2449694, y: -0.30950046}
-      - {x: 0.26212534, y: -0.303782}
-      - {x: 0.2745005, y: -0.29999995}
+  m_Offset: {x: 0.013674935, y: -0.059257984}
+  m_Size: {x: 0.5606367, y: 1.4273853}
+  m_Direction: 0
 --- !u!82 &82377511702228276
 AudioSource:
   m_ObjectHideFlags: 1
@@ -107,7 +82,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
@@ -179,18 +154,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114295634295865660
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1990085902274210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5aee1413d347b4098055ba227f57dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 100
 --- !u!114 &114581574766348424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,7 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 2000
   score: 333
-  hitFX: {fileID: 1776831518906806, guid: 0e51bfb707472874ba234f484cfd0d5a, type: 2}
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -225,7 +187,7 @@ MonoBehaviour:
   maxFireDelay: 1.5
   salvo: 3
   salvoCadence: 0.3
-  bulletSpeed: 7
+  bulletSpeed: 8
   bulletPrefab: {fileID: 1971696146169532, guid: a19c484c6f5a46948905ff4efc48cf8d,
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
@@ -265,7 +227,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0a15013a971ef5b4ebc7781099637269, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f79e3f0a2beefa640b5fc1d6ab9a3f4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

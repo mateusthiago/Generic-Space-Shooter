@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4362464838536950}
+  - component: {fileID: 114349863644291108}
   - component: {fileID: 212799978417957410}
   - component: {fileID: 50518502894176826}
   - component: {fileID: 58088668883901200}
-  - component: {fileID: 114780862263335934}
   m_Layer: 11
   m_Name: EBulletCommon
   m_TagString: EnemyBullet
@@ -72,13 +72,13 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.002099961, y: 0}
   serializedVersion: 2
   m_Radius: 0.14340138
---- !u!114 &114780862263335934
+--- !u!114 &114349863644291108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,10 +86,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1971696146169532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5aee1413d347b4098055ba227f57dc, type: 3}
+  m_Script: {fileID: 11500000, guid: a17bc7c1088828249a1573ac3ffa902b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 100
 --- !u!212 &212799978417957410
 SpriteRenderer:
   m_ObjectHideFlags: 1

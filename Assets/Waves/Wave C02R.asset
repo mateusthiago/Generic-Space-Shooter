@@ -9,13 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
-  m_Name: Wave B00R
+  m_Name: Wave C02R
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1990085902274210, guid: 95196086f24911743ae6997e9ebb72ac,
+  enemyPrefab: {fileID: 1889875854597586, guid: 5759a0e47fe7ec64ca0d90a555ee3d27,
     type: 2}
-  pathPrefab: {fileID: 1719820266233940, guid: b28ab6b5375ed4342be5d3828ea18624, type: 2}
-  spawnInterval: 0.5
+  pathPrefab: {fileID: 1149451611950680, guid: 02f1635ca99db2d44a7e6067358c5017, type: 2}
+  spawnInterval: 0.1
   randomInterval: 0
-  numberOfSpawns: 5
-  moveSpeed: 5
-  delayForNextWave: 1
+  numberOfSpawns: 1
+  moveSpeed: 3
+  delayForNextWave: 4
+  waitForAllEnemiesToSpawn: 1

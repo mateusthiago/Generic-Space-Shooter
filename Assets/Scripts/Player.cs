@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float screenEdgePadding = 0.8f;
     [SerializeField] int health = 10;
     [SerializeField] AudioClip deathSFX;
-    [SerializeField] [RangeAttribute(0f, 1f)] float deahVolume;
+    [SerializeField] [RangeAttribute(0f, 1f)] float deathVolume;
     [SerializeField] GameObject deathVFX;
     [SerializeField] bool isInvulnerable = false;
     [SerializeField] bool canMove = false;
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject shield;
     [SerializeField] int bulletType = 1;
     GameObject activeShield;
+    Rigidbody2D playerRB;
 
     [Header("Bullet")]
     [SerializeField] GameObject bulletPrefab;
@@ -33,7 +34,8 @@ public class Player : MonoBehaviour
     bool isFiring;
 
     void Start ()
-    {        
+    {
+        playerRB = GetComponent<Rigidbody2D>();
         SetUpMoveBoundaries();        
         //StartCoroutine(AutoFire());
 	}
@@ -49,13 +51,26 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        
         var deltaX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * moveSpeed;
         var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
 
         var deltaY = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
         var newYPos = Mathf.Clamp(transform.position.y + deltaY, yMin, yMax);
+        
 
         transform.position = new Vector2(newXPos, newYPos);
+        
+        
+
+        /*
+        var deltaX = Input.GetAxis("Horizontal") * moveSpeed;
+        var deltaY = Input.GetAxis("Vertical") * moveSpeed;
+
+        Debug.Log(new Vector2(deltaX, deltaY));
+        playerRB.velocity = new Vector2(deltaX, deltaY);
+        */
+        
     }
 
     private void Fire()
@@ -97,27 +112,27 @@ public class Player : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {        
         if (!isInvulnerable)
             ProcessHit(collision);
     }
 
-    private void ProcessHit(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        var incomingCollision = collision.gameObject.GetComponent<Bullet>();
+        if (hasShield) DestroyShield();
+        else  PlayerDeath();   
+    }
 
-        if (hasShield)
-        {
-            incomingCollision.Hit();
-            Destroy(activeShield);
-            hasShield = false;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
+    private void ProcessHit(Collider2D collision)
+    {
+        var incomingCollision = collision.gameObject.GetComponent<EnemyBullet>();
+        if (incomingCollision == null) return;
+
+        if (hasShield) DestroyShield();
         else
         {            
-            health -= incomingCollision.GetDamage();
-            incomingCollision.Hit();
+            health -= incomingCollision.GetDamage();            
             if (health <= 0)
             {
                 PlayerDeath();
@@ -126,29 +141,21 @@ public class Player : MonoBehaviour
         
     }
 
-    private void PlayerDeath()
-    {
-        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deahVolume);
-        var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
-        Destroy(newExplosion, 2f);        
-        FindObjectOfType<Game>().GameOver();
-        Destroy(this.gameObject);
-    }
-
     public void PickUpShield()
     {
         if (!hasShield)
         {
             activeShield = Instantiate(shield, transform.position, Quaternion.identity);
             hasShield = true;
-        }        
+        }
     }
 
-
-
-    void OnGUI()
+    private void DestroyShield()
     {
-        GUI.Label(new Rect(10, 10, 200, 40), health.ToString());
+        Destroy(activeShield);
+        hasShield = false;
+        playerRB.velocity = Vector2.zero;
+        return;
     }
 
     private void SetUpMoveBoundaries()
@@ -168,6 +175,15 @@ public class Player : MonoBehaviour
     public void ToggleMove(bool toggle)
     {
         canMove = toggle;
+    }
+
+    private void PlayerDeath()
+    {
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+        var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
+        Destroy(newExplosion, 2f);
+        FindObjectOfType<Game>().GameOver();
+        Destroy(this.gameObject);
     }
 
 }

@@ -9,24 +9,32 @@ public class ShieldPickUp : MonoBehaviour {
     [SerializeField] int score;
     GameObject player;
     Rigidbody2D rb;
+    float grow = 0.4f;
 
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         player = FindObjectOfType<Player>().gameObject;
         rb = GetComponent<Rigidbody2D>();
         int[] lefOrRight = { -2, +2 };
-        rb.velocity = new Vector2(lefOrRight[Random.Range(0, 1)], -1);
+        rb.velocity = new Vector2(lefOrRight[Random.Range(0, 1)], -3);
 	}
 	
 	// Update is called once per frame
 	void Update ()
-    {
+    {        
+
         if (transform.position.x <= -5.4)
-            rb.velocity = new Vector2(+2, -1);
+            rb.velocity = new Vector2(+2, -3);
         else if (transform.position.x >= 5.4)
-            rb.velocity = new Vector2(-2, -1);
+            rb.velocity = new Vector2(-2, -3);
+
+        transform.localScale += new Vector3(grow, grow, 0) * Time.deltaTime;
+
+        if (transform.localScale.x >= 2f) grow *= -1;
+        else if (transform.localScale.x <= 1.5f) grow *= -1;
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

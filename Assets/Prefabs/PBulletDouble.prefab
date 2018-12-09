@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4885049542370544}
+  - component: {fileID: 114370565089872760}
   - component: {fileID: 212559172118291256}
   - component: {fileID: 50021538100091212}
-  - component: {fileID: 114999910475786864}
   - component: {fileID: 70639070928216136}
   m_Layer: 9
   m_Name: PBulletCommon (1)
@@ -54,9 +54,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4647571525751526}
+  - component: {fileID: 114309485128890748}
   - component: {fileID: 212786858131193028}
   - component: {fileID: 50467782487798126}
-  - component: {fileID: 114844505960128642}
   - component: {fileID: 70662434786827316}
   m_Layer: 9
   m_Name: PBulletCommon
@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1929084014455054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647571525751526}
@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1965341077921978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 0, z: 0}
+  m_LocalPosition: {x: -0.2, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4008706767654582}
@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1428378480670606}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4008706767654582}
@@ -196,7 +196,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.09, y: 0.54}
   m_Direction: 0
---- !u!114 &114844505960128642
+--- !u!114 &114309485128890748
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,11 +204,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1965341077921978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5aee1413d347b4098055ba227f57dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 422e7cdc816a01c42b20ecb59d2903bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitFX: {fileID: 1776831518906806, guid: 0e51bfb707472874ba234f484cfd0d5a, type: 2}
   damage: 100
---- !u!114 &114999910475786864
+--- !u!114 &114370565089872760
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,9 +217,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1428378480670606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c5aee1413d347b4098055ba227f57dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 422e7cdc816a01c42b20ecb59d2903bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitFX: {fileID: 1776831518906806, guid: 0e51bfb707472874ba234f484cfd0d5a, type: 2}
   damage: 100
 --- !u!212 &212559172118291256
 SpriteRenderer:

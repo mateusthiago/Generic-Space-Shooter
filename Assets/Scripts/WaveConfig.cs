@@ -14,6 +14,7 @@ public class WaveConfig : ScriptableObject
     [SerializeField] int numberOfSpawns = 5;
     [SerializeField] float moveSpeed = 2f;
     [SerializeField] float delayForNextWave = 1f;
+    [SerializeField] bool waitForAllEnemiesToSpawn = true;
 
     public GameObject GetEnemyPrefab() { return enemyPrefab; }
 
@@ -26,6 +27,8 @@ public class WaveConfig : ScriptableObject
     public float GetMoveSpeed() { return moveSpeed;  }
 
     public float GetDelayForNextWave() { return delayForNextWave; }
+
+    public bool GetWait() { return waitForAllEnemiesToSpawn; }
 
     public List<Transform> GetWaypointList()
     {

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 212353582995175494}
   - component: {fileID: 50683989715612966}
   - component: {fileID: 61887732705053950}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ShieldPickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1554663995037974}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.4133557, y: -4.114478, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

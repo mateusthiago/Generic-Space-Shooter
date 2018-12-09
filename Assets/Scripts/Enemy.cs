@@ -6,8 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Enemy")]
     [SerializeField] int health = 200;
-    [SerializeField] int score = 100;
-    [SerializeField] GameObject hitFX;
+    [SerializeField] int score = 100;    
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioClip deathSFX;
     [SerializeField] [Range(0.1f, 1f)] float deathVolume;
@@ -55,7 +54,7 @@ public class Enemy : MonoBehaviour
                 GameObject newEnemyBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 newEnemyBullet.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * bulletSpeed;
                 //newEnemyBullet.GetComponent<Rigidbody2D>().AddForce((FindObjectOfType<Player>().transform.position - transform.position) * bulletSpeed);
-                newEnemyBullet.GetComponent<Rigidbody2D>().AddTorque(45f);
+                newEnemyBullet.GetComponent<Rigidbody2D>().AddTorque(400f);
                 AudioSource.PlayClipAtPoint(bulletSFX, Camera.main.transform.position, bulletVolume);
                 yield return new WaitForSeconds(salvoCadence);
             }
@@ -68,12 +67,17 @@ public class Enemy : MonoBehaviour
         ProcessHit(collision);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {        
+        EnemyDeath();
+    }
+
     private void ProcessHit(Collider2D collision)
     {
-        var bullet = collision.gameObject.GetComponent<Bullet>();
-        health -= bullet.GetDamage();
-        bullet.Hit();
-        StartCoroutine (HitAnimation(collision.gameObject));
+        var incomingCollision = collision.gameObject.GetComponent<PlayerBullet>();
+        Debug.Log(collision.gameObject);
+        health -= incomingCollision.GetDamage();        
+        StartCoroutine (HitAnimation());
         if (health <= 0)
         {
             EnemyDeath();
@@ -90,10 +94,8 @@ public class Enemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private IEnumerator HitAnimation(GameObject bullet)
-    {
-        var newHitFX = Instantiate(hitFX, bullet.transform.position, Quaternion.Euler(90, 0, 0));
-        Destroy(newHitFX, 0.2f);
+    private IEnumerator HitAnimation()
+    {        
         GetComponent<SpriteRenderer>().color = new Vector4(0, 255, 255, 255);
         yield return new WaitForSeconds(0.05f);
         GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 255);

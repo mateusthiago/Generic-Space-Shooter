@@ -99,7 +99,7 @@ public class Game : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             GameObject newPlayer = Instantiate(player, new Vector3(0, -11f, 0), Quaternion.identity);
-            GameObject newTrail = Instantiate(speedParticleFX, newPlayer.transform.position, Quaternion.Euler(-270, 0, 0));
+            //GameObject newTrail = Instantiate(speedParticleFX, newPlayer.transform.position, Quaternion.Euler(-270, 0, 0));
             newPlayer.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 15f);
             AudioSource.PlayClipAtPoint(introLaunchSFX, Camera.main.transform.position, 0.6f);
 
@@ -114,7 +114,7 @@ public class Game : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             newPlayer.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
-            newTrail.GetComponent<ParticleSystem>().Stop();
+            //newTrail.GetComponent<ParticleSystem>().Stop();
             StartCoroutine(FindObjectOfType<BackgroundScroller>().GetComponent<BackgroundScroller>().NormalScroll());
 
             while (newPlayer.transform.position.y > -7)
@@ -124,7 +124,7 @@ public class Game : MonoBehaviour
 
             newPlayer.GetComponent<Rigidbody2D>().gravityScale = 0f;
             newPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            newTrail.GetComponent<Trail>().DestroyTrail();
+            //newTrail.GetComponent<Trail>().DestroyTrail();
 
             yield return new WaitForSeconds(1f);
 
@@ -185,7 +185,6 @@ public class Game : MonoBehaviour
         {
             skipIntro = GUI.Toggle(new Rect(10, 10, 200, 100), skipIntro, "Skip Intro");
         }        
-        //GUI.Label(new Rect(10, 10, 200, 40), health.ToString());
     }
 
 }
