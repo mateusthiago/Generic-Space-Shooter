@@ -170,7 +170,8 @@ MonoBehaviour:
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
-  powerUp: {fileID: 0}
+  powerUp: {fileID: 1570734091422592, guid: 433cb6c7823266641a8a6f23ca830562, type: 2}
+  chance: 1
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 3

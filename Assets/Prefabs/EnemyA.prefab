@@ -202,10 +202,11 @@ MonoBehaviour:
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
-  powerUp: {fileID: 0}
+  powerUp: {fileID: 1554663995037974, guid: d1639647ce8c28947af170ed712e7595, type: 2}
+  chance: 0.05
   fireCountdown: 0
-  minFireDelay: 1
-  maxFireDelay: 2
+  minFireDelay: 2
+  maxFireDelay: 3
   salvo: 1
   salvoCadence: 0
   bulletSpeed: 8

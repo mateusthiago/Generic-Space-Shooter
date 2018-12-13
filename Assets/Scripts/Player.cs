@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool hasShield = false;
     [SerializeField] GameObject shield;
     [SerializeField] int bulletType = 1;
+    [SerializeField] Transform firePosition;
     GameObject activeShield;
     Rigidbody2D playerRB;
 
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
 
     Coroutine autoFire;
     bool isFiring;
+    
 
     void Start ()
     {
@@ -44,33 +46,40 @@ public class Player : MonoBehaviour
     {       
         if (canMove)
         {
-            Move();
+            UpdateMove();
             Fire();
         }        
 	}
 
-    private void Move()
+    /*
+    private void FixedUpdate()
     {
-        
+        if (canMove)
+        {
+            FixedUpdateMove();            
+        }
+    }
+    */
+
+    private void UpdateMove()
+    {
         var deltaX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * moveSpeed;
         var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
 
         var deltaY = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
         var newYPos = Mathf.Clamp(transform.position.y + deltaY, yMin, yMax);
         
-
         transform.position = new Vector2(newXPos, newYPos);
+    }
         
         
-
-        /*
+    private void FixedUpdateMove()
+    {         
         var deltaX = Input.GetAxis("Horizontal") * moveSpeed;
         var deltaY = Input.GetAxis("Vertical") * moveSpeed;
 
         Debug.Log(new Vector2(deltaX, deltaY));
-        playerRB.velocity = new Vector2(deltaX, deltaY);
-        */
-        
+        playerRB.velocity = new Vector2(deltaX, deltaY);  
     }
 
     private void Fire()
@@ -93,18 +102,44 @@ public class Player : MonoBehaviour
         {
             if (bulletType == 1)
             {
-                GameObject newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                GameObject newBullet = Instantiate(bulletPrefab, firePosition.position, Quaternion.identity);
                 newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
                 AudioSource.PlayClipAtPoint(bulletSFX, Camera.main.transform.position, bulletVolume);
                 yield return new WaitForSeconds(bulletCadence);
             }
             else if (bulletType == 2)
             {
-                Vector3 bulletPos = new Vector3(0.2f, 0, 0);
-                GameObject newBullet1 = Instantiate(bulletPrefab, (transform.position + bulletPos), Quaternion.identity);
-                GameObject newBullet2 = Instantiate(bulletPrefab, (transform.position - bulletPos), Quaternion.identity);
+                Vector3 bulletOffset = new Vector3(0.2f, 0, 0);
+                GameObject newBullet1 = Instantiate(bulletPrefab, (firePosition.position + bulletOffset), Quaternion.identity);
+                GameObject newBullet2 = Instantiate(bulletPrefab, (firePosition.position - bulletOffset), Quaternion.identity);
                 newBullet1.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
                 newBullet2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                AudioSource.PlayClipAtPoint(bulletSFX, Camera.main.transform.position, bulletVolume);
+                yield return new WaitForSeconds(bulletCadence);
+            }
+            else if (bulletType == 3)
+            {
+                GameObject newBullet1 = Instantiate(bulletPrefab, firePosition.position, Quaternion.identity);
+                GameObject newBullet2 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(0.2f, -0.1f, 0)), Quaternion.identity);
+                GameObject newBullet3 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(-0.2f, -0.1f, 0)), Quaternion.identity);
+                newBullet1.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet3.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                AudioSource.PlayClipAtPoint(bulletSFX, Camera.main.transform.position, bulletVolume);
+                yield return new WaitForSeconds(bulletCadence);
+            }
+            else if (bulletType == 4)
+            {                
+                GameObject newBullet1 = Instantiate(bulletPrefab, firePosition.position, Quaternion.identity);
+                GameObject newBullet2 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(0.2f, -0.1f, 0)), Quaternion.identity);
+                GameObject newBullet3 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(-0.2f, -0.1f, 0)), Quaternion.identity);
+                GameObject newBullet4 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(0.7f, -0.4f, 0)), Quaternion.identity);
+                GameObject newBullet5 = Instantiate(bulletPrefab, (firePosition.position + new Vector3(-0.7f, -0.4f, 0)), Quaternion.identity);
+                newBullet1.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet3.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet4.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
+                newBullet5.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bulletSpeed);
                 AudioSource.PlayClipAtPoint(bulletSFX, Camera.main.transform.position, bulletVolume);
                 yield return new WaitForSeconds(bulletCadence);
             }
@@ -147,6 +182,14 @@ public class Player : MonoBehaviour
         {
             activeShield = Instantiate(shield, transform.position, Quaternion.identity);
             hasShield = true;
+        }
+    }
+
+    public void PickUpBullet()
+    {
+        if (bulletType < 4)
+        {
+            bulletType += 1;
         }
     }
 

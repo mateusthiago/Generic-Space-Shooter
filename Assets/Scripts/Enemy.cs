@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip deathSFX;
     [SerializeField] [Range(0.1f, 1f)] float deathVolume;
     [SerializeField] GameObject powerUp;
+    [SerializeField] [Range(0,1)] float chance;
 
     [Header("Bullet")]
     [SerializeField] float fireCountdown;
@@ -75,7 +76,7 @@ public class Enemy : MonoBehaviour
     private void ProcessHit(Collider2D collision)
     {
         var incomingCollision = collision.gameObject.GetComponent<PlayerBullet>();
-        Debug.Log(collision.gameObject);
+        Debug.Log(incomingCollision);
         health -= incomingCollision.GetDamage();        
         StartCoroutine (HitAnimation());
         if (health <= 0)
@@ -87,10 +88,19 @@ public class Enemy : MonoBehaviour
     public void EnemyDeath()
     {
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
-        var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(-90, 0, 0));
+        var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(90, 0, 0));
         Destroy(newExplosion, 0.5f);
         FindObjectOfType<GameSession>().AddScore(score);
-        if (powerUp != null) { Instantiate(powerUp, transform.position, Quaternion.identity); powerUp = null; }
+        if (powerUp != null)
+        {
+            float powerUpDrop = Random.value;
+            if (powerUpDrop <= chance)
+            {
+                Instantiate(powerUp, transform.position, Quaternion.identity); powerUp = null;
+                Debug.Log("drop ok");
+            }
+            else Debug.Log("no drop");
+        }
         Destroy(this.gameObject);
     }
 

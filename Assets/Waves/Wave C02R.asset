@@ -18,5 +18,5 @@ MonoBehaviour:
   randomInterval: 0
   numberOfSpawns: 1
   moveSpeed: 3
-  delayForNextWave: 4
+  delayForNextWave: 5
   waitForAllEnemiesToSpawn: 1

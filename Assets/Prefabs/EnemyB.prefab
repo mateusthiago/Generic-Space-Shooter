@@ -182,6 +182,7 @@ MonoBehaviour:
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
   powerUp: {fileID: 1554663995037974, guid: d1639647ce8c28947af170ed712e7595, type: 2}
+  chance: 1
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 1.5

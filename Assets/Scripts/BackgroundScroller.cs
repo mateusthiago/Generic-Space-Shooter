@@ -15,9 +15,7 @@ public class BackgroundScroller : MonoBehaviour {
     private void Start()
     {
         myMaterial = gameObject.GetComponent<Renderer>().material;
-        offset = new Vector2(0f, scrollSpeed);
-
-        
+        offset = new Vector2(0f, scrollSpeed);        
     }
 
     void Update ()

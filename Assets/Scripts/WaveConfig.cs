@@ -13,8 +13,9 @@ public class WaveConfig : ScriptableObject
     [SerializeField] float randomInterval = 0.3f;
     [SerializeField] int numberOfSpawns = 5;
     [SerializeField] float moveSpeed = 2f;
-    [SerializeField] float delayForNextWave = 1f;
+    [SerializeField] float delayForNextWave = 1f;    
     [SerializeField] bool waitForAllEnemiesToSpawn = true;
+    
 
     public GameObject GetEnemyPrefab() { return enemyPrefab; }
 
