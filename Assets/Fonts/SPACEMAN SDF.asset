@@ -1014,10 +1014,10 @@ Material:
     m_Floats:
     - _Ambient: 0.5
     - _Bevel: 1
-    - _BevelClamp: 0.284
-    - _BevelOffset: -0.043
-    - _BevelRoundness: 0.274
-    - _BevelWidth: 0.284
+    - _BevelClamp: 0.287
+    - _BevelOffset: -0.363
+    - _BevelRoundness: 0.198
+    - _BevelWidth: 0.369
     - _BumpFace: 0
     - _BumpOutline: 0
     - _ColorMask: 15

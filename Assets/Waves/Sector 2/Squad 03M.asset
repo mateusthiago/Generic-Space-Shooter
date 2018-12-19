@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
+  m_Name: Squad 03M
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1932833356655976, guid: 7ba1200c0b9699f4397c8412c03e64c3,
+    type: 2}
+  pathPrefab: {fileID: 1606145636306162, guid: 4e51e596adaa5c04383a6c5bef0d028d, type: 2}
+  waitBeforeStart: 3
+  spawnInterval: 0
+  randomInterval: 0
+  numberOfSpawns: 1
+  moveSpeed: 2
+  delayForNextWave: 14
+  waitForAllEnemiesToSpawn: 0
+  waitForAllEnemiesToDie: 0
+  AlterDropChance: 0
+  dropChance: 0
+  isSectorEnd: 0
+  nextSector: 0

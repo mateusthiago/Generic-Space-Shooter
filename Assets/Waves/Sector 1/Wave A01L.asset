@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
+  m_Name: Wave A01L
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1245866027371044, guid: 21327a7d914717e43b3348807cfacbdb,
+    type: 2}
+  pathPrefab: {fileID: 1744157479856382, guid: b7f5fa744d48e6a44bd8107bed9724a0, type: 2}
+  waitBeforeStart: 0
+  spawnInterval: 0.5
+  randomInterval: 0
+  numberOfSpawns: 5
+  moveSpeed: 4
+  delayForNextWave: 1
+  waitForAllEnemiesToSpawn: 1
+  waitForAllEnemiesToDie: 0
+  AlterDropChance: 0
+  dropChance: 0
+  isSectorEnd: 0
+  nextSector: 0

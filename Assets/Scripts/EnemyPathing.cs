@@ -6,15 +6,24 @@ public class EnemyPathing : MonoBehaviour
 {
     WaveConfig waveConfig;
     List<Transform> waypointList;    
-    int waypointIndex = 0;    
+    int waypointIndex = 1;    
+
+    [SerializeField] bool blackSaucerBehavior = false;
+    [SerializeField] bool voidShipBehavior = false;
+    bool isFiring = false;
+    Enemy enemyScript;
 
     // Use this for initialization
 	void Start ()
     {
+        if (blackSaucerBehavior || voidShipBehavior)
+        {
+            enemyScript = GetComponent<Enemy>();
+        }
         if (waveConfig)
         {
             waypointList = waveConfig.GetWaypointList();
-            transform.position = waypointList[waypointIndex].transform.position;
+            //transform.position = waypointList[waypointIndex].transform.position;
         }            
 	}
 	
@@ -22,7 +31,8 @@ public class EnemyPathing : MonoBehaviour
 	void Update ()
     {
         if (waveConfig)
-            Move();
+            if (!isFiring)
+                StartCoroutine(Move());
     }
 
     public void SetWaveConfig(WaveConfig waveConfigPassed)
@@ -30,7 +40,7 @@ public class EnemyPathing : MonoBehaviour
         waveConfig = waveConfigPassed;
     }
 
-    private void Move()
+    private IEnumerator Move()
     {
         if (waypointIndex <= waypointList.Count - 1)
         {
@@ -39,6 +49,24 @@ public class EnemyPathing : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
             if (transform.position == targetPosition)
             {
+                if (blackSaucerBehavior && waypointIndex < waypointList.Count -1)
+                {
+                    isFiring = true;
+                    yield return StartCoroutine(enemyScript.SaucerFire());
+                    isFiring = false;
+                }
+                else if (voidShipBehavior && waypointIndex < waypointList.Count - 1)
+                {
+                    isFiring = true;
+                    yield return StartCoroutine(enemyScript.VoidFire());
+                    isFiring = false;
+                }
+
+                if (voidShipBehavior && waypointIndex == waypointList.Count - 2)
+                {
+                    waypointIndex = 0;
+                }
+
                 waypointIndex++;
             }
         }
@@ -46,5 +74,7 @@ public class EnemyPathing : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        yield return null;
     }
+   
 }

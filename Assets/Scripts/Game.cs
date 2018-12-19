@@ -15,10 +15,14 @@ public class Game : MonoBehaviour
     [SerializeField] GameObject gameCanvas;
     [SerializeField] GameObject startButton;
     [SerializeField] TextMeshProUGUI startButtontText;
+    [SerializeField] TextMeshProUGUI sectorBanner;
     [SerializeField] AudioClip pauseSFX;
     [SerializeField] AudioClip introLaunchSFX;
     [SerializeField] Image fadeScreen;
     [SerializeField] public bool skipIntro;
+    [SerializeField] int sector = 1;
+    [SerializeField] bool startingWaveSetInEnemySpawner = false;
+    [SerializeField] bool dontShowMenu = false;
 
 
     bool gameIsPaused = false;
@@ -26,8 +30,9 @@ public class Game : MonoBehaviour
 	
 	void Start ()
     {
-        ShowMenu();
+        if (!dontShowMenu) ShowMenu();
         if (FindObjectOfType<GameSession>().GetHiScore() > 0) skipIntro = true;
+        sector = FindObjectOfType<GameSession>().GetLastSector();
     }
 
     private void ShowMenu()
@@ -90,7 +95,7 @@ public class Game : MonoBehaviour
 
     private IEnumerator GameIntro()
     {
-        if (!skipIntro)
+        if (!skipIntro && sector == 1)
         {
             titleCanvas.SetActive(false);
 
@@ -129,10 +134,10 @@ public class Game : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
 
+            newPlayer.GetComponent<Player>().SetBulletType(sector);
             newPlayer.GetComponent<Player>().ToggleMove(true);
             gameCanvas.SetActive(true);
-            enemySpawner.SetActive(true);
-            gameStarted = true;
+            enemySpawner.SetActive(true);            
         }
         else
         {
@@ -140,12 +145,28 @@ public class Game : MonoBehaviour
             GameObject newPlayer = Instantiate(player, new Vector3(0, -7f, 0), Quaternion.identity);
             newPlayer.GetComponent<Rigidbody2D>().gravityScale = 0f;
             newPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            newPlayer.GetComponent<Player>().SetBulletType(sector);
             newPlayer.GetComponent<Player>().ToggleMove(true);
             gameCanvas.SetActive(true);
-            enemySpawner.SetActive(true);
-            gameStarted = true;
+            if (!startingWaveSetInEnemySpawner) enemySpawner.GetComponent<EnemySpawner>().SetLastSector(sector);
+            enemySpawner.SetActive(true);            
         }
-        
+
+        SetSectorStarsAndShowBanner(sector, 0);
+        gameStarted = true;
+    }    
+
+    public void SetSectorStarsAndShowBanner(int newSector, int wait)
+    {
+        sector = newSector;
+        FindObjectOfType<BackgroundScroller>().GetComponent<BackgroundScroller>().SectorStars(sector);
+        StartCoroutine(sectorBanner.GetComponent<SectorBanner>().ShowSectorBanner(sector, wait));
+    }
+
+    public void CallFinalSector()
+    {
+        sector = 4;
+        StartCoroutine(sectorBanner.GetComponent<SectorBanner>().ShowDangerBanner());
     }
 
 

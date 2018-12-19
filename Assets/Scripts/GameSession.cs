@@ -9,6 +9,7 @@ public class GameSession : MonoBehaviour
     
     int score;
     int hiScore;
+    [SerializeField] int lastSector = 1;
 
     void Awake()
     {
@@ -58,4 +59,7 @@ public class GameSession : MonoBehaviour
     {
 		
 	}
+
+    public int GetLastSector() { return lastSector; }
+    public void SetLastSector(int sector) { lastSector = sector; }
 }

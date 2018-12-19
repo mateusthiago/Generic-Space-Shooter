@@ -7,6 +7,11 @@ public class BackgroundScroller : MonoBehaviour {
     [SerializeField] float scrollSpeed = 0.05f;
     [SerializeField] GameObject backgroundStars;
     [SerializeField] GameObject foregroundStars;
+    [SerializeField] GameObject bgStars2;
+    [SerializeField] GameObject fgStars2;
+    [SerializeField] GameObject bgStars3;
+    [SerializeField] GameObject bgBgStars3;
+    [SerializeField] GameObject fgStars3;
     Material myMaterial;
     Vector2 offset;
 
@@ -54,5 +59,43 @@ public class BackgroundScroller : MonoBehaviour {
             offset = introScroll;            
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void SectorStars(int sector)
+    {
+        switch (sector)
+        {
+            case 1:
+                backgroundStars.SetActive(true);
+                foregroundStars.SetActive(true);
+                bgStars2.SetActive(false);
+                fgStars2.SetActive(false);
+                bgStars3.SetActive(false);
+                bgBgStars3.SetActive(false);
+                fgStars3.SetActive(false);
+                break;
+            case 2:
+                backgroundStars.SetActive(false);
+                foregroundStars.SetActive(false);
+                bgStars2.SetActive(true);
+                fgStars2.SetActive(true);
+                bgStars3.SetActive(false);
+                bgBgStars3.SetActive(false);
+                fgStars3.SetActive(false);
+                break;
+            case 3:
+                backgroundStars.SetActive(false);
+                foregroundStars.SetActive(false);
+                bgStars2.SetActive(false);
+                fgStars2.SetActive(false);
+                bgStars3.SetActive(true);
+                bgBgStars3.SetActive(true);
+                fgStars3.SetActive(true);
+                break;
+
+        }
+            
+
+        
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
+  m_Name: Destroyer RtoL END SECTOR 2
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1599366598264754, guid: 36dcde0ea163c86419930962e7cb67fe,
+    type: 2}
+  pathPrefab: {fileID: 1600396075827832, guid: 0e89ef85a30ed414188b15cd46969beb, type: 2}
+  waitBeforeStart: 0
+  spawnInterval: 0
+  randomInterval: 0
+  numberOfSpawns: 1
+  moveSpeed: 2
+  delayForNextWave: 2
+  waitForAllEnemiesToSpawn: 1
+  waitForAllEnemiesToDie: 1
+  AlterDropChance: 0
+  dropChance: 0
+  isSectorEnd: 1
+  nextSector: 3

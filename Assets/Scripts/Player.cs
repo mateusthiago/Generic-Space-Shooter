@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         var deltaY = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
         var newYPos = Mathf.Clamp(transform.position.y + deltaY, yMin, yMax);
         
-        transform.position = new Vector2(newXPos, newYPos);
+        transform.position = new Vector3(newXPos, newYPos, -1); // SE DER ALGUMA MERDA PODE SER O -1 NO Z
     }
         
         
@@ -155,8 +155,8 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (hasShield) DestroyShield();
-        else  PlayerDeath();   
+        if (hasShield) StartCoroutine(DestroyShield());
+        else PlayerDeath();   
     }
 
     private void ProcessHit(Collider2D collision)
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
         var incomingCollision = collision.gameObject.GetComponent<EnemyBullet>();
         if (incomingCollision == null) return;
 
-        if (hasShield) DestroyShield();
+        if (hasShield) StartCoroutine(DestroyShield());
         else
         {            
             health -= incomingCollision.GetDamage();            
@@ -193,12 +193,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void DestroyShield()
+    private IEnumerator DestroyShield()
     {
+        isInvulnerable = true;
         Destroy(activeShield);
         hasShield = false;
         playerRB.velocity = Vector2.zero;
-        return;
+        for (int i = 0; i < 20; i++)
+        {
+            GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 0);
+            yield return new WaitForSeconds(0.05f);
+            GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 255);
+            yield return new WaitForSeconds(0.05f);
+        }
+        isInvulnerable = false;  
     }
 
     private void SetUpMoveBoundaries()
@@ -228,5 +236,8 @@ public class Player : MonoBehaviour
         FindObjectOfType<Game>().GameOver();
         Destroy(this.gameObject);
     }
+
+    public int GetBulletType() { return bulletType; }
+    public void SetBulletType(int type) { bulletType = type; }
 
 }

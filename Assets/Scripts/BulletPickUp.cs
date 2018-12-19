@@ -12,7 +12,11 @@ public class BulletPickUp : MonoBehaviour {
     float grow = 0.4f;
 
 
-    // Use this for initialization
+    private void Awake()
+    {
+        if (FindObjectsOfType(GetType()).Length > 1) Destroy(this.gameObject);
+    }
+
     void Start ()
     {
         player = FindObjectOfType<Player>().gameObject;
@@ -43,7 +47,7 @@ public class BulletPickUp : MonoBehaviour {
         {
             player.GetComponent<Player>().PickUpBullet();
             FindObjectOfType<GameSession>().AddScore(score);
-            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.1f);
+            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.6f);
             Destroy(this.gameObject);
         }
         

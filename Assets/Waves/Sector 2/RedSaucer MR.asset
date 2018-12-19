@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
+  m_Name: RedSaucer MR
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1808613285991220, guid: 78889be14a99e374ca6636300178bb06,
+    type: 2}
+  pathPrefab: {fileID: 1368599361200004, guid: b81d28ea64915d04aa2069b612331da6, type: 2}
+  waitBeforeStart: 0
+  spawnInterval: 0
+  randomInterval: 0
+  numberOfSpawns: 1
+  moveSpeed: 2
+  delayForNextWave: 2
+  waitForAllEnemiesToSpawn: 1
+  waitForAllEnemiesToDie: 1
+  AlterDropChance: 1
+  dropChance: 1
+  isSectorEnd: 0
+  nextSector: 0

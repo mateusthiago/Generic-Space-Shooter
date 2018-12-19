@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
+  m_Name: Wave B02L
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1990085902274210, guid: 95196086f24911743ae6997e9ebb72ac,
+    type: 2}
+  pathPrefab: {fileID: 1028699162981632, guid: 1e1bc50bde677aa4385790e4a130d927, type: 2}
+  waitBeforeStart: 0
+  spawnInterval: 0.8
+  randomInterval: 0
+  numberOfSpawns: 1
+  moveSpeed: 3
+  delayForNextWave: 1
+  waitForAllEnemiesToSpawn: 1
+  waitForAllEnemiesToDie: 1
+  AlterDropChance: 0
+  dropChance: 0
+  isSectorEnd: 0
+  nextSector: 0
