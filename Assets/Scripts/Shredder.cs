@@ -13,8 +13,9 @@ public class Shredder : MonoBehaviour
         else
             Destroy(collision.gameObject);
             */
-
-        Destroy(collision.gameObject);
+        var isEnemy = collision.GetComponent<Enemy>();        
+        if (isEnemy != null) isEnemy.EnemyDeath(false);
+        else Destroy(collision.gameObject);
     }
 
 }

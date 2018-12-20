@@ -35,7 +35,8 @@ public class Enemy : MonoBehaviour
     [Header("VoidShip")]
     [SerializeField] AudioClip voidCharge;
 
-    bool amILastInWave = false;
+    //bool amILastInWave = false;
+    bool isInDeathFunction = false;
     bool amILastInSector = false;
     int nextSector = 0;
 
@@ -213,7 +214,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {        
-        EnemyDeath();
+        EnemyDeath(true);
     }
 
     private void ProcessHit(Collider2D collision)
@@ -221,19 +222,33 @@ public class Enemy : MonoBehaviour
         var incomingCollision = collision.gameObject.GetComponent<PlayerBullet>();
         if (incomingCollision != null) health -= incomingCollision.GetDamage();        
         StartCoroutine (HitAnimation());
-        if (health <= 0)
+        if (health <= 0 && !isInDeathFunction)
         {
-            EnemyDeath();
+            isInDeathFunction = true;
+            EnemyDeath(true);
         }
     }
 
-    public void EnemyDeath()
+    public void EnemyDeath(bool playAudio)
     {
-        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+        if (playAudio) AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
         var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(90, 0, 0));
         Destroy(newExplosion, 2f);
         FindObjectOfType<GameSession>().AddScore(score);
-        DropPowerUp();        
+        DropPowerUp();
+
+        // trecho retirado de ONDESTROY
+        //if (amILastInWave == true) FindObjectOfType<EnemySpawner>().GetComponent<EnemySpawner>().LastEnemyDied(true);
+        if (amILastInSector == true)
+        {
+            if (nextSector == 4) FindObjectOfType<Game>().GetComponent<Game>().CallFinalSector();
+            else FindObjectOfType<Game>().GetComponent<Game>().SetSectorStarsAndShowBanner(nextSector, 2);
+            FindObjectOfType<GameSession>().SetLastSector(nextSector);
+        }
+
+        FindObjectOfType<EnemySpawner>().SubtractEnemyCount();
+        // FIM DO TRECHO
+
         Destroy(this.gameObject);
     }
 
@@ -280,21 +295,13 @@ public class Enemy : MonoBehaviour
         GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 255);
     }
 
-    public void SetLastInWave(bool whatSpawnerSaid) { amILastInWave = whatSpawnerSaid; }
+    //public void SetLastInWave(bool whatSpawnerSaid) { amILastInWave = whatSpawnerSaid; }
     public void SetLastInSector(bool whatSpawnerSaid) { amILastInSector = whatSpawnerSaid; }
     public void SetNextSector(int sector) { nextSector = sector; }
 
     private void OnDestroy()
     {
-        if (amILastInWave == true) FindObjectOfType<EnemySpawner>().GetComponent<EnemySpawner>().LastEnemyDied(true);
-        if (amILastInSector == true)
-        {
-            if (nextSector == 4) FindObjectOfType<Game>().GetComponent<Game>().CallFinalSector();
-            else FindObjectOfType<Game>().GetComponent<Game>().SetSectorStarsAndShowBanner(nextSector, 2);
-            FindObjectOfType<GameSession>().SetLastSector(nextSector);
-        }
-
-        FindObjectOfType<EnemySpawner>().SubtractEnemyCount();
+        
     }
 
     public bool GetIsFiring()

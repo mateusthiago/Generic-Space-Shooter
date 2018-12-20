@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e397aedf490b094abc8e521312555d5, type: 3}
-  m_Name: SECTOR 3 Void 1shot UR 10s
+  m_Name: SECTOR 3 Void 1shot UR 7s
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1233767473284106, guid: ba0ff9154d0e7dc4c8ec6030b6570e00,
     type: 2}
@@ -19,10 +19,11 @@ MonoBehaviour:
   randomInterval: 0
   numberOfSpawns: 1
   moveSpeed: 3
-  delayForNextWave: 10
+  delayForNextWave: 7
   waitForAllEnemiesToSpawn: 1
   waitForAllEnemiesToDie: 1
   AlterDropChance: 0
   dropChance: 0
   isSectorEnd: 1
   nextSector: 4
+  isBoss: 0

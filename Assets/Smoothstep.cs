@@ -10,7 +10,7 @@ public class Smoothstep : MonoBehaviour
     float maximum = 5.0f;
 
     // Time taken for the transition.
-    float duration = 5.0f;
+    //float duration = 5.0f;
 
     float startTime;
 

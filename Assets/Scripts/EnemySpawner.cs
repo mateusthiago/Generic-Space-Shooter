@@ -3,23 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] int startingWave = 0;
     [SerializeField] List<WaveConfig> waveConfigList;
-    [SerializeField] bool looping = false;
+    [SerializeField] GameObject redBoss;
+
     int enemyCount;
-
-    bool lastEnemyDied;
-
-    //IEnumerator Start ()
-    //   {
-    //       do
-    //       {
-    //           yield return StartCoroutine(SpawnAllWaves());
-    //       }
-    //       while (looping);
-    //}
 
     private void Start()
     {
@@ -35,10 +27,8 @@ public class EnemySpawner : MonoBehaviour
             else StartCoroutine(SpawnAllEnemiesInWave(currentWave));
             if (currentWave.GetWaitForAllEnemiesToDie())
             {
-                while (enemyCount > 0) yield return new WaitForSeconds(0.2f);
-                //while (!lastEnemyDied) yield return new WaitForSeconds(0.2f);
-            }
-            lastEnemyDied = false;
+                while (enemyCount > 0) yield return new WaitForSeconds(0.2f);                
+            }            
             yield return new WaitForSeconds(currentWave.GetDelayForNextWave());
         }
     }
@@ -49,30 +39,29 @@ public class EnemySpawner : MonoBehaviour
 
         for (int spawnCount = 1; spawnCount <= waveConfig.GetNumberOfSpawns(); spawnCount++)
         {
-            Debug.Log("Enemy "+ spawnCount + " / " + waveConfig.GetNumberOfSpawns());
-            GameObject newEnemy = Instantiate(waveConfig.GetEnemyPrefab(), waveConfig.GetWaypointList()[0].transform.position, waveConfig.GetEnemyPrefab().transform.rotation);            
-            if(waveConfig.isBoss==false) newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-            if (spawnCount == waveConfig.GetNumberOfSpawns())
+            if (waveConfig.isBoss == false)
             {
-                Enemy newEnemyScript = newEnemy.GetComponent<Enemy>();
-                Debug.Log("script: " + newEnemyScript);
-
-                if (waveConfig.GetWaitForAllEnemiesToDie() && newEnemyScript!=null) newEnemyScript.SetLastInWave(true);
-
-                if (waveConfig.DifDropChance() == true) newEnemyScript.SetDropChance(waveConfig.GetDropChance());
-
-                if (waveConfig.IsSectorEnd() == true)
+                GameObject newEnemy = Instantiate(waveConfig.GetEnemyPrefab(), waveConfig.GetWaypointList()[0].transform.position, waveConfig.GetEnemyPrefab().transform.rotation);
+                newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+                if (spawnCount == waveConfig.GetNumberOfSpawns())
                 {
-                    newEnemyScript.SetLastInSector(true);
-                    newEnemyScript.SetNextSector(waveConfig.GetNextSector());
+                    Enemy newEnemyScript = newEnemy.GetComponent<Enemy>();
+
+                    if (waveConfig.DifDropChance() == true) newEnemyScript.SetDropChance(waveConfig.GetDropChance());
+
+                    if (waveConfig.IsSectorEnd() == true)
+                    {
+                        newEnemyScript.SetLastInSector(true);
+                        newEnemyScript.SetNextSector(waveConfig.GetNextSector());
+                    }
                 }
-            }
+            }                
+            else if (waveConfig.isBoss == true) redBoss.SetActive(true);
+            
             
             yield return new WaitForSeconds(waveConfig.GetSpawnInterval());
         }
-    }
-
-    public void LastEnemyDied(bool cond) { lastEnemyDied = cond; }
+    }    
 
     public void SetLastSector(int sector)
     {

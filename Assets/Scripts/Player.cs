@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] [RangeAttribute(0f, 1f)] float deathVolume;
     [SerializeField] GameObject deathVFX;
     [SerializeField] bool isInvulnerable = false;
+    bool startInvul;
     [SerializeField] bool canMove = false;
     [SerializeField] bool hasShield = false;
     [SerializeField] GameObject shield;
@@ -38,7 +39,8 @@ public class Player : MonoBehaviour
     void Start ()
     {
         playerRB = GetComponent<Rigidbody2D>();
-        SetUpMoveBoundaries();        
+        SetUpMoveBoundaries();
+        startInvul = isInvulnerable;
         //StartCoroutine(AutoFire());
 	}
 
@@ -156,7 +158,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (hasShield) StartCoroutine(DestroyShield());
-        else PlayerDeath();   
+        else if (!startInvul) PlayerDeath();   
     }
 
     private void ProcessHit(Collider2D collision)
@@ -195,9 +197,10 @@ public class Player : MonoBehaviour
 
     private IEnumerator DestroyShield()
     {
-        isInvulnerable = true;
-        Destroy(activeShield);
-        hasShield = false;
+        isInvulnerable = true;        
+        activeShield.GetComponent<Shield>().DestroyShield();
+        hasShield = false;                
+
         playerRB.velocity = Vector2.zero;
         for (int i = 0; i < 20; i++)
         {
@@ -206,7 +209,7 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().color = new Vector4(255, 255, 255, 255);
             yield return new WaitForSeconds(0.05f);
         }
-        isInvulnerable = false;  
+        if (!startInvul) isInvulnerable = false;  
     }
 
     private void SetUpMoveBoundaries()

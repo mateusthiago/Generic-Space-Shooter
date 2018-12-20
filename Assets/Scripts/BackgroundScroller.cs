@@ -10,7 +10,7 @@ public class BackgroundScroller : MonoBehaviour {
     [SerializeField] GameObject bgStars2;
     [SerializeField] GameObject fgStars2;
     [SerializeField] GameObject bgStars3;
-    [SerializeField] GameObject bgBgStars3;
+    //[SerializeField] GameObject bgBgStars3;
     [SerializeField] GameObject fgStars3;
     Material myMaterial;
     Vector2 offset;
@@ -71,7 +71,7 @@ public class BackgroundScroller : MonoBehaviour {
                 bgStars2.SetActive(false);
                 fgStars2.SetActive(false);
                 bgStars3.SetActive(false);
-                bgBgStars3.SetActive(false);
+                //bgBgStars3.SetActive(false);
                 fgStars3.SetActive(false);
                 break;
             case 2:
@@ -80,7 +80,7 @@ public class BackgroundScroller : MonoBehaviour {
                 bgStars2.SetActive(true);
                 fgStars2.SetActive(true);
                 bgStars3.SetActive(false);
-                bgBgStars3.SetActive(false);
+                //bgBgStars3.SetActive(false);
                 fgStars3.SetActive(false);
                 break;
             case 3:
@@ -89,7 +89,7 @@ public class BackgroundScroller : MonoBehaviour {
                 bgStars2.SetActive(false);
                 fgStars2.SetActive(false);
                 bgStars3.SetActive(true);
-                bgBgStars3.SetActive(true);
+                //bgBgStars3.SetActive(true);
                 fgStars3.SetActive(true);
                 break;
 

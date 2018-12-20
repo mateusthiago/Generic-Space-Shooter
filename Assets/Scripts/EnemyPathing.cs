@@ -72,7 +72,9 @@ public class EnemyPathing : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            var enemy = GetComponent<Enemy>();
+            if (enemy != null) GetComponent<Enemy>().EnemyDeath(false);
+            else Destroy(this.gameObject);
         }
         yield return null;
     }

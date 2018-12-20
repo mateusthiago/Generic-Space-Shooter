@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212934378724322196}
   - component: {fileID: 50467535955671674}
   - component: {fileID: 70486211588311154}
+  - component: {fileID: 114802411733799768}
   m_Layer: 10
   m_Name: topgun
   m_TagString: Untagged
@@ -99,6 +100,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4750218577280910}
   - component: {fileID: 212990429202511712}
+  - component: {fileID: 50450834395816446}
+  - component: {fileID: 70579765642335444}
+  - component: {fileID: 114896316635884152}
   m_Layer: 10
   m_Name: headgunR
   m_TagString: Untagged
@@ -224,6 +228,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4194081634814748}
   - component: {fileID: 212237669560944922}
+  - component: {fileID: 50746130312205540}
+  - component: {fileID: 70918759491349358}
+  - component: {fileID: 114879511021695410}
   m_Layer: 10
   m_Name: headgunL
   m_TagString: Untagged
@@ -275,6 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4394175477033126}
   - component: {fileID: 212288127038496612}
+  - component: {fileID: 70002714594756386}
   m_Layer: 10
   m_Name: maincannon barrel
   m_TagString: Untagged
@@ -348,7 +356,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1480713757376866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.562, y: -3.53, z: 0}
+  m_LocalPosition: {x: -0.562, y: -3.19, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 4666774445918928}
@@ -457,7 +465,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385729119228972}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.01, y: -3.13, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -472,7 +480,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106958737075828}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.339, z: 0}
+  m_LocalPosition: {x: -0.02, y: -0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4750218577280910}
@@ -485,7 +493,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1208727186550318}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.339, z: 0}
+  m_LocalPosition: {x: -0.02, y: -0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4194081634814748}
@@ -498,7 +506,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1085599750582356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.59, y: -3.53, z: 0}
+  m_LocalPosition: {x: 0.59, y: -3.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4641493626181894}
@@ -525,7 +533,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530644711855460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 16.924, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4249634720049258}
@@ -580,6 +588,26 @@ Transform:
   m_Father: {fileID: 4799893094255220}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50450834395816446
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085599750582356}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!50 &50454095595746876
 Rigidbody2D:
   serializedVersion: 4
@@ -620,6 +648,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50746130312205540
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480713757376866}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &70002714594756386
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1682836032492394}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.65}
+  m_Size: {x: 0.4, y: 1.2}
+  m_Direction: 0
 --- !u!70 &70486211588311154
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -635,6 +698,36 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0021928698, y: -0.02786541}
   m_Size: {x: 0.41667187, y: 0.7137308}
   m_Direction: 0
+--- !u!70 &70579765642335444
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085599750582356}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.345}
+  m_Size: {x: 0.2, y: 0.69}
+  m_Direction: 0
+--- !u!70 &70918759491349358
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480713757376866}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.345}
+  m_Size: {x: 0.2, y: 0.69}
+  m_Direction: 0
 --- !u!114 &114179520552127344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -647,20 +740,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 0}
-  health: 50000
   stage: 1
   topGun: {fileID: 1014285321990536}
+  topGunMoveSFX: {fileID: 8300000, guid: c3ed820931878904d931242a15780711, type: 3}
   topGunBullet: {fileID: 1971696146169532, guid: eb1fd58b21f568847baa0514e48e7c1b,
     type: 2}
-  topGunBulletSpeed: 4
-  topGunFireCountdown: 3
+  topGunBulletSFX: {fileID: 8300000, guid: e420b50fe638e3740b7e8e5eed8fbc85, type: 3}
+  topGunBulletSpeed: 6
+  topGunFireCountdown: 4
   topGunSalvo: 10
   topGunCadence: 0.05
   headGunL: {fileID: 1480713757376866}
   headGunR: {fileID: 1085599750582356}
-  headGunsFireCountdown: 0
-  headGunsCadence: 0
-  headGunsSalvo: 0
+  headGunsBullet: {fileID: 1971696146169532, guid: 8874715041bb25a458258faa74c4f6d1,
+    type: 2}
+  headGunsSFX: {fileID: 8300000, guid: 09b6ec2fbcb4c5542b7d22863b793ccd, type: 3}
+  headGunsBulletSpeed: 10
+  headGunsFireCountdown: 2
+  headGunsCadence: 0.1
+  headGunsSalvo: 10
   headCannon: {fileID: 1385729119228972}
   headCannonFireCountdown: 0
   headCannonCadence: 0
@@ -682,6 +780,58 @@ MonoBehaviour:
   wingGunLFP: {fileID: 4487235976233848}
   wingGunRFP: {fileID: 4264764366099778}
   mainCannonFP: {fileID: 4125211442465318}
+  partsDestroyed: 0
+--- !u!114 &114802411733799768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1014285321990536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c9978879c56554c96366227b45d370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  deathSFX: {fileID: 8300000, guid: 95dff7e02a5ecaa4298a52a13d2f0e92, type: 3}
+  deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
+  smokeVFX: {fileID: 1790954437806558, guid: e9dfbb6e82a163a42b1c73f72ffad610, type: 2}
+  powerUp: {fileID: 1554663995037974, guid: d1639647ce8c28947af170ed712e7595, type: 2}
+  score: 555
+--- !u!114 &114879511021695410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480713757376866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c9978879c56554c96366227b45d370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  deathSFX: {fileID: 8300000, guid: 95dff7e02a5ecaa4298a52a13d2f0e92, type: 3}
+  deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
+  smokeVFX: {fileID: 1790954437806558, guid: e9dfbb6e82a163a42b1c73f72ffad610, type: 2}
+  powerUp: {fileID: 0}
+  score: 333
+--- !u!114 &114896316635884152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1085599750582356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c9978879c56554c96366227b45d370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1000
+  deathSFX: {fileID: 8300000, guid: 95dff7e02a5ecaa4298a52a13d2f0e92, type: 3}
+  deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
+  smokeVFX: {fileID: 1790954437806558, guid: e9dfbb6e82a163a42b1c73f72ffad610, type: 2}
+  powerUp: {fileID: 0}
+  score: 333
 --- !u!198 &198354987742867588
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -694,7 +844,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5227,7 +5377,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5983,7 +6133,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -9760,7 +9910,7 @@ ParticleSystem:
   stopAction: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
