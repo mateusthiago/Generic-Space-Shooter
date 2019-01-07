@@ -32,13 +32,20 @@ public class PartDamage : MonoBehaviour
     private void DestroyPart()
     {
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, 0.1f);
-        GameObject PartDestroyedVFX =  Instantiate(deathVFX, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
-        GameObject newsmokeVFX = Instantiate(smokeVFX, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
-        newsmokeVFX.transform.parent = FindObjectOfType<RedBoss>().transform;
+        GameObject PartDestroyedVFX;        
+        PartDestroyedVFX =  Instantiate(deathVFX, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.Euler(90,0,0));
+        if (smokeVFX != null)
+        {
+            GameObject newsmokeVFX = Instantiate(smokeVFX, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
+            newsmokeVFX.transform.parent = FindObjectOfType<RedBoss>().transform;
+        }
         Destroy(PartDestroyedVFX, 2f);
-        //FindObjectOfType<GameSession>().AddScore(score);
+        FindObjectOfType<GameSession>().AddScore(score);
         RedBoss.redBoss.AddPartDestroyed();
         DropPowerUp();
+        if (this.name == "topGun") Destroy(GameObject.Find("topGunHatch"));
+        if (this.name == "headCannon") Destroy(GameObject.Find("headCannonHatch"));
+        if (this.name == "maincannon barrel") Destroy(GameObject.Find("maincannon"));
         Destroy(this.gameObject);
     }
 

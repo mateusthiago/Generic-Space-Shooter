@@ -36,10 +36,10 @@ GameObject:
   - component: {fileID: 4757960608964620}
   - component: {fileID: 114438309964422472}
   - component: {fileID: 212651705664280762}
-  - component: {fileID: 60661839668883706}
   - component: {fileID: 50211498485450340}
   - component: {fileID: 199175115524394106}
   - component: {fileID: 198588767470351038}
+  - component: {fileID: 70661518346620436}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -94,8 +94,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &60661839668883706
-PolygonCollider2D:
+--- !u!70 &70661518346620436
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -106,25 +106,9 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.7, y: 1.02}
-    newSize: {x: 1.7, y: 1.02}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.009998858, y: -0.19146776}
-      - {x: 0.21081352, y: -0.3611021}
-      - {x: 0.33583578, y: 0.1357789}
-      - {x: 0.12527862, y: 0.29899836}
-      - {x: -0.1518597, y: 0.30095768}
-      - {x: -0.35181564, y: 0.13989973}
-      - {x: -0.22287351, y: -0.38763857}
+  m_Offset: {x: 0.007956311, y: 0.09149787}
+  m_Size: {x: 0.3155975, y: 0.48268157}
+  m_Direction: 0
 --- !u!114 &114438309964422472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,7 +126,7 @@ MonoBehaviour:
   deathSFX: {fileID: 8300000, guid: 95dff7e02a5ecaa4298a52a13d2f0e92, type: 3}
   deathVolume: 0.4
   deathVFX: {fileID: 1018930567323950, guid: c395a97344aa0ab43bcbca79e67ff9be, type: 2}
-  isInvulnerable: 1
+  isInvulnerable: 0
   canMove: 0
   hasShield: 0
   shield: {fileID: 1641588695836840, guid: 413a2dfb3bb156748a2992e43342d622, type: 2}

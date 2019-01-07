@@ -18,10 +18,15 @@ public class SectorBanner : MonoBehaviour
     float t;    
 
 
-    public void CallSectorBanner(int sector, float wait)
-    {
-        StartCoroutine(ShowSectorBanner(sector, wait));
-    }
+    //public void CallSectorBanner(int sector, float wait)
+    //{
+    //    if (sector == 4)
+    //    {
+    //        StartCoroutine(ShowDangerBanner());
+    //        return;
+    //    }
+    //    StartCoroutine(ShowSectorBanner(sector, wait));
+    //}
 
     public IEnumerator ShowSectorBanner(int sector, float wait)
     {

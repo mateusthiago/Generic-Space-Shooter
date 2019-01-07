@@ -53,35 +53,35 @@ public class Player : MonoBehaviour
         }        
 	}
 
-    /*
-    private void FixedUpdate()
-    {
-        if (canMove)
-        {
-            FixedUpdateMove();            
-        }
-    }
-    */
+
+    //private void FixedUpdate()
+    //{
+    //    if (canMove)
+    //    {
+    //        FixedUpdateMove();
+    //    }
+    //}
+
 
     private void UpdateMove()
     {
-        var deltaX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * moveSpeed;
-        var newXPos = Mathf.Clamp(transform.position.x + deltaX, xMin, xMax);
 
-        var deltaY = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
-        var newYPos = Mathf.Clamp(transform.position.y + deltaY, yMin, yMax);
-        
-        transform.position = new Vector3(newXPos, newYPos, -1); // SE DER ALGUMA MERDA PODE SER O -1 NO Z
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * Time.deltaTime * moveSpeed;
+        Vector3 clampedNewPos = transform.position + input;
+        clampedNewPos.x = Mathf.Clamp(clampedNewPos.x, xMin, xMax);
+        clampedNewPos.y = Mathf.Clamp(clampedNewPos.y, yMin, yMax);
+
+        transform.position = clampedNewPos;
     }
         
         
     private void FixedUpdateMove()
     {         
-        var deltaX = Input.GetAxis("Horizontal") * moveSpeed;
-        var deltaY = Input.GetAxis("Vertical") * moveSpeed;
+        //var deltaX = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        //var deltaY = Input.GetAxisRaw("Vertical") * moveSpeed;
 
-        Debug.Log(new Vector2(deltaX, deltaY));
-        playerRB.velocity = new Vector2(deltaX, deltaY);  
+        playerRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * moveSpeed;
+        Debug.Log(playerRB.velocity);
     }
 
     private void Fire()

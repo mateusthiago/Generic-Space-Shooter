@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
             fireCountdown -= Time.deltaTime;
             if (fireCountdown <= 0 && maxFireDelay != 0) StartCoroutine(DestroyerFire());
         }
-        else if (redSaucerBehavior && isFiring == false)
+        else if (redSaucerBehavior && !isFiring)
         {
             StartCoroutine(SaucerFire());
             isFiring = true;

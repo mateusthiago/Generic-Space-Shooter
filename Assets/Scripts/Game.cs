@@ -103,7 +103,7 @@ public class Game : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
 
-            GameObject newPlayer = Instantiate(player, new Vector3(0, -11f, 0), Quaternion.identity);
+            GameObject newPlayer = Instantiate(player, new Vector3(0, -11f, -1), Quaternion.identity);
             GameObject newTrail = Instantiate(speedParticleFX, newPlayer.transform);
             newTrail.transform.Rotate(-270, 0, 0);
             newPlayer.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 15f);
@@ -142,7 +142,7 @@ public class Game : MonoBehaviour
         else
         {
             titleCanvas.SetActive(false);
-            GameObject newPlayer = Instantiate(player, new Vector3(0, -7f, 0), Quaternion.identity);
+            GameObject newPlayer = Instantiate(player, new Vector3(0, -7f, -1), Quaternion.identity);
             newPlayer.GetComponent<Rigidbody2D>().gravityScale = 0f;
             newPlayer.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             newPlayer.GetComponent<Player>().SetBulletType(sector);
@@ -160,7 +160,10 @@ public class Game : MonoBehaviour
     {
         sector = newSector;
         FindObjectOfType<BackgroundScroller>().GetComponent<BackgroundScroller>().SectorStars(sector);
-        StartCoroutine(sectorBanner.GetComponent<SectorBanner>().ShowSectorBanner(sector, wait));
+        if (sector == 4)
+            StartCoroutine(sectorBanner.GetComponent<SectorBanner>().ShowDangerBanner());
+        else        
+            StartCoroutine(sectorBanner.GetComponent<SectorBanner>().ShowSectorBanner(sector, wait));
     }
 
     public void CallFinalSector()

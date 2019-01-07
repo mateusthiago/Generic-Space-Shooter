@@ -84,6 +84,7 @@ public class BackgroundScroller : MonoBehaviour {
                 fgStars3.SetActive(false);
                 break;
             case 3:
+            case 4:
                 backgroundStars.SetActive(false);
                 foregroundStars.SetActive(false);
                 bgStars2.SetActive(false);
@@ -92,6 +93,7 @@ public class BackgroundScroller : MonoBehaviour {
                 //bgBgStars3.SetActive(true);
                 fgStars3.SetActive(true);
                 break;
+
 
         }
             

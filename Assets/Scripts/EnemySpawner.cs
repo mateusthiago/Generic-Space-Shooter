@@ -70,14 +70,15 @@ public class EnemySpawner : MonoBehaviour
             case 1: break;
             case 2: startingWave = 14; break;
             case 3: startingWave = 41; break;
+            case 4: startingWave = 58; break;
         }
     }
 
     public void AddEnemyCount() { enemyCount += 1; }
     public void SubtractEnemyCount() { enemyCount -= 1; }
 
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(10, 10, 100, 20), enemyCount.ToString());
-    }
+    //private void OnGUI()
+    //{
+    //    GUI.Label(new Rect(10, 10, 100, 20), enemyCount.ToString());
+    //}
 }
