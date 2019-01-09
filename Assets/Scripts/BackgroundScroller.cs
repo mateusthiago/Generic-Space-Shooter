@@ -25,7 +25,7 @@ public class BackgroundScroller : MonoBehaviour {
 
     void Update ()
     {
-        myMaterial.mainTextureOffset += offset * Time.deltaTime;
+       myMaterial.mainTextureOffset += offset * Time.deltaTime; //scrolling background if a material is set in inspector
 	}
 
     public IEnumerator GameIntroScroll()
