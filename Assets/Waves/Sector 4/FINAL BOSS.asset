@@ -19,8 +19,9 @@ MonoBehaviour:
   numberOfSpawns: 1
   moveSpeed: 0
   delayForNextWave: 0
+  waitForOnScreenEnemiesToDie: 1
   waitForAllEnemiesToSpawn: 0
-  waitForAllEnemiesToDie: 0
+  waitForThisWaveToDie: 0
   AlterDropChance: 0
   dropChance: 0
   isSectorEnd: 0

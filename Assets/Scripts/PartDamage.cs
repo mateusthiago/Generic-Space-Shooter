@@ -10,15 +10,20 @@ public class PartDamage : MonoBehaviour
     [SerializeField] GameObject smokeVFX;
     [SerializeField] GameObject powerUp;
     [SerializeField] int score;
+    bool partDestroyed = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var bullet = collision.GetComponent<PlayerBullet>();        
+        var bullet = collision.GetComponent<PlayerBullet>();
         if (bullet != null)
         {
             StartCoroutine(HitAnimation());
             health -= bullet.GetDamage();
-            if (health < 0) DestroyPart();
+            if (health < 0 && !partDestroyed)
+            {
+                DestroyPart();
+                partDestroyed = true;
+            }
         }
     }
 
@@ -31,21 +36,26 @@ public class PartDamage : MonoBehaviour
 
     private void DestroyPart()
     {
+        FindObjectOfType<GameSession>().AddScore(score);
+        DropPowerUp();
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, 0.1f);
-        GameObject PartDestroyedVFX;        
-        PartDestroyedVFX =  Instantiate(deathVFX, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.Euler(90,0,0));
+        GameObject PartDestroyedVFX =  Instantiate(deathVFX, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.Euler(90,0,0));
+        Destroy(PartDestroyedVFX, 2f);
         if (smokeVFX != null)
         {
             GameObject newsmokeVFX = Instantiate(smokeVFX, new Vector3(transform.position.x, transform.position.y, -1), Quaternion.identity);
             newsmokeVFX.transform.parent = FindObjectOfType<RedBoss>().transform;
+        }        
+
+        if (this.name == "topGun") { Destroy(GameObject.Find("topGunHatch")); RedBoss.redBoss.AddPartDestroyed(); }        
+        if (this.name == "maincannon barrel") { Destroy(GameObject.Find("maincannon")); RedBoss.redBoss.AddPartDestroyed(); }
+        if (this.name == "headcannon")
+        {
+            Destroy(GameObject.Find("headCannonHatch"));
+            if (RedBoss.redBoss.laser != null) Destroy(RedBoss.redBoss.laser);
+            RedBoss.redBoss.AddPartDestroyed();
         }
-        Destroy(PartDestroyedVFX, 2f);
-        FindObjectOfType<GameSession>().AddScore(score);
-        RedBoss.redBoss.AddPartDestroyed();
-        DropPowerUp();
-        if (this.name == "topGun") Destroy(GameObject.Find("topGunHatch"));
-        if (this.name == "headCannon") Destroy(GameObject.Find("headCannonHatch"));
-        if (this.name == "maincannon barrel") Destroy(GameObject.Find("maincannon"));
+
         Destroy(this.gameObject);
     }
 

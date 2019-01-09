@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 8000
-  score: 2222
+  score: 999
   deathVFX: {fileID: 1445309098305614, guid: 6bd9f8716579c0e4f9179195e3228980, type: 2}
   deathSFX: {fileID: 8300000, guid: e420b50fe638e3740b7e8e5eed8fbc85, type: 3}
   deathVolume: 0.1

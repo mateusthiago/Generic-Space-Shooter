@@ -1448,7 +1448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1496,7 +1496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1500
-  score: 500
+  score: 444
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1509,7 +1509,7 @@ MonoBehaviour:
   voidBehavior: 0
   destroyerBehavior: 0
   fireCountdown: 0
-  minFireDelay: 1
+  minFireDelay: 2
   maxFireDelay: 3
   salvo: 5
   salvoCadence: 0.1
@@ -1531,7 +1531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15000
-  score: 2222
+  score: 888
   deathVFX: {fileID: 1051936681136180, guid: 50f99785f3273dc44a56560846b330f4, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1601,7 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1500
-  score: 500
+  score: 444
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1614,7 +1614,7 @@ MonoBehaviour:
   voidBehavior: 0
   destroyerBehavior: 0
   fireCountdown: 0
-  minFireDelay: 1
+  minFireDelay: 2
   maxFireDelay: 3
   salvo: 5
   salvoCadence: 0.1
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1697,7 +1697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1

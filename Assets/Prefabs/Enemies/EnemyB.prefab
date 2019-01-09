@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114987411047805182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,6 +189,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 1.5
@@ -198,7 +201,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!212 &212258831475329502
 SpriteRenderer:
   m_ObjectHideFlags: 1

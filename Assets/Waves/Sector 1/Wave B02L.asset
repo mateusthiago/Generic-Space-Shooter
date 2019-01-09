@@ -20,9 +20,11 @@ MonoBehaviour:
   numberOfSpawns: 1
   moveSpeed: 3
   delayForNextWave: 1
+  waitForOnScreenEnemiesToDie: 1
   waitForAllEnemiesToSpawn: 1
-  waitForAllEnemiesToDie: 1
+  waitForThisWaveToDie: 1
   AlterDropChance: 0
   dropChance: 0
   isSectorEnd: 0
   nextSector: 0
+  isBoss: 0

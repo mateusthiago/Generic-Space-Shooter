@@ -8,6 +8,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] int startingWave = 0;
+    [SerializeField] int displayCurrentWave;
     [SerializeField] List<WaveConfig> waveConfigList;
     [SerializeField] GameObject redBoss;
 
@@ -22,12 +23,20 @@ public class EnemySpawner : MonoBehaviour
     {
         for (int waveIndex = startingWave; waveIndex < waveConfigList.Count; waveIndex++)
         {
+            displayCurrentWave = waveIndex;
             var currentWave = waveConfigList[waveIndex];
-            if (currentWave.GetWaitForAllEnemiesToSpawn()) yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
-            else StartCoroutine(SpawnAllEnemiesInWave(currentWave));
-            if (currentWave.GetWaitForAllEnemiesToDie())
+
+            if (currentWave.GetWaitForOnScreenEnemiesToDie())
             {
-                while (enemyCount > 0) yield return new WaitForSeconds(0.2f);                
+                while (enemyCount > 0) yield return new WaitForSeconds(0.3f);
+            }
+
+            if (currentWave.GetWaitForAllEnemiesToSpawn()) yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));            
+            else StartCoroutine(SpawnAllEnemiesInWave(currentWave));
+
+            if (currentWave.GetWaitForThisWaveToDie())
+            {
+                while (enemyCount > 0) yield return new WaitForSeconds(0.3f);                
             }            
             yield return new WaitForSeconds(currentWave.GetDelayForNextWave());
         }
@@ -77,8 +86,8 @@ public class EnemySpawner : MonoBehaviour
     public void AddEnemyCount() { enemyCount += 1; }
     public void SubtractEnemyCount() { enemyCount -= 1; }
 
-    //private void OnGUI()
-    //{
-    //    GUI.Label(new Rect(10, 10, 100, 20), enemyCount.ToString());
-    //}
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 100, 20), enemyCount.ToString());
+    }
 }

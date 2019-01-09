@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitFX: {fileID: 1776831518906806, guid: 0e51bfb707472874ba234f484cfd0d5a, type: 2}
-  damage: 100
+  damage: 5000
 --- !u!212 &212922547823669938
 SpriteRenderer:
   m_ObjectHideFlags: 1

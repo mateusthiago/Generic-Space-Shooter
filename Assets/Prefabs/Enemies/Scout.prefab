@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  score: 100
+  score: 99
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -321,6 +321,7 @@ MonoBehaviour:
   redSaucerBehavior: 0
   scoutBehavior: 1
   voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 0.2
   maxFireDelay: 0.4

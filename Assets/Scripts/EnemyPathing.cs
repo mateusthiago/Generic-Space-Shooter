@@ -72,9 +72,19 @@ public class EnemyPathing : MonoBehaviour
         }
         else
         {
-            var enemy = GetComponent<Enemy>();
-            if (enemy != null) GetComponent<Enemy>().EnemyDeath(false);
-            else Destroy(this.gameObject);
+            if (transform.childCount > 0) // contar children em caso de squads e destrui-los antes de destruir o object squad
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    var squadMember = transform.GetChild(i).GetComponent<Enemy>();
+                    if (squadMember != null) squadMember.EnemyDeath(false);
+                }
+            }
+
+            var enemy = GetComponent<Enemy>(); // verificar se o objeto é um inimigo
+            if (enemy != null) enemy.EnemyDeath(false); // destruir o inimigo corretamente para subtrair do enemyCount em EnemySpawner
+
+            else Destroy(this.gameObject); // destruir o objeto com este script (provavelmente um objeto vazio utilizado para formar squads)
         }
         yield return null;
     }

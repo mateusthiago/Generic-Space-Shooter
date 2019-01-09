@@ -14,9 +14,10 @@ public class WaveConfig : ScriptableObject
     [SerializeField] float randomInterval = 0.3f;
     [SerializeField] int numberOfSpawns = 5;
     [SerializeField] float moveSpeed = 2f;
-    [SerializeField] float delayForNextWave = 1f;    
+    [SerializeField] float delayForNextWave = 1f;
+    [SerializeField] bool waitForOnScreenEnemiesToDie = false;
     [SerializeField] bool waitForAllEnemiesToSpawn = true;
-    [SerializeField] bool waitForAllEnemiesToDie = false;
+    [SerializeField] bool waitForThisWaveToDie = false;
     [SerializeField] bool AlterDropChance;
     [SerializeField] [Range(0, 1f)] float dropChance;    
     [SerializeField] bool isSectorEnd = false;
@@ -38,9 +39,11 @@ public class WaveConfig : ScriptableObject
 
     public float GetDelayForNextWave() { return delayForNextWave; }
 
+    public bool GetWaitForOnScreenEnemiesToDie() { return waitForOnScreenEnemiesToDie; }
+
     public bool GetWaitForAllEnemiesToSpawn() { return waitForAllEnemiesToSpawn; }
 
-    public bool GetWaitForAllEnemiesToDie() { return waitForAllEnemiesToDie; }
+    public bool GetWaitForThisWaveToDie() { return waitForThisWaveToDie; }
 
     public bool DifDropChance()
     {

@@ -104,7 +104,7 @@ public class SectorBanner : MonoBehaviour
 
     private IEnumerator PlayDangerSound()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(1f);

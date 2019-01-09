@@ -34,10 +34,13 @@ public class Player : MonoBehaviour
 
     Coroutine autoFire;
     bool isFiring;
+
+    public static Player player;
     
 
     void Start ()
     {
+        player = this;
         playerRB = GetComponent<Rigidbody2D>();
         SetUpMoveBoundaries();
         startInvul = isInvulnerable;
@@ -63,10 +66,10 @@ public class Player : MonoBehaviour
     //}
 
 
-    private void UpdateMove()
+    public void UpdateMove(float horizontal = 0, float vertical = 0)
     {
-
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * Time.deltaTime * moveSpeed;
+        Vector3 input = new Vector3 (horizontal, vertical) * Time.deltaTime * moveSpeed;
+        if (horizontal==0 && vertical ==0) input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * Time.deltaTime * moveSpeed;
         Vector3 clampedNewPos = transform.position + input;
         clampedNewPos.x = Mathf.Clamp(clampedNewPos.x, xMin, xMax);
         clampedNewPos.y = Mathf.Clamp(clampedNewPos.y, yMin, yMax);
@@ -157,8 +160,8 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (hasShield) StartCoroutine(DestroyShield());
-        else if (!startInvul) PlayerDeath();   
+            if (hasShield) StartCoroutine(DestroyShield());
+            else if (!startInvul) PlayerDeath();  
     }
 
     private void ProcessHit(Collider2D collision)

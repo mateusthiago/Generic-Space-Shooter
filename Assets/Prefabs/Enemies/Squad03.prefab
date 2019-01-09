@@ -979,7 +979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -989,6 +989,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 3
@@ -999,7 +1001,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114021366628708898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1012,7 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1022,6 +1024,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 3
@@ -1032,7 +1036,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114104332060184058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1045,6 +1049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114117371875149746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1057,6 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114358713593885178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1069,6 +1075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114394938553439276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1081,7 +1088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1500
-  score: 500
+  score: 444
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1091,6 +1098,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1
   maxFireDelay: 3
@@ -1101,7 +1110,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114556535062369164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1114,7 +1123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1500
-  score: 500
+  score: 444
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1124,6 +1133,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1
   maxFireDelay: 3
@@ -1134,7 +1145,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114580437834311676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1147,6 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114680262027652948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1159,7 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 700
-  score: 250
+  score: 222
   deathVFX: {fileID: 1755081310142336, guid: cc2716dc46a019b49ae6c41ce54917d9, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
   deathVolume: 0.1
@@ -1169,6 +1181,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 1.5
   maxFireDelay: 3
@@ -1179,7 +1193,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114681761498039538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1192,6 +1206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114701475747278180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1204,6 +1219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114755821233331594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1226,6 +1242,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 2
   maxFireDelay: 2
@@ -1236,7 +1254,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!114 &114805069960100634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1249,6 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!212 &212074847633882240
 SpriteRenderer:
   m_ObjectHideFlags: 1

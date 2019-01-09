@@ -1,14 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RedBoss : MonoBehaviour
 {
-    [Header("Boss")]
-    [SerializeField] GameObject boss;
-    //[SerializeField] int health = 50000;
-    [SerializeField] int stage = 1;
-
     [Header("Guns")]
     [SerializeField] GameObject topGun;
     [SerializeField] AudioClip topGunMoveSFX;
@@ -20,6 +16,7 @@ public class RedBoss : MonoBehaviour
     [SerializeField] float topGunCadence;
     float topGunRotation = 45;
     bool topGunIsFiring = false;
+    [Space]
     [SerializeField] GameObject headGunL;
     [SerializeField] GameObject headGunR;
     [SerializeField] GameObject headGunsBullet;
@@ -29,15 +26,18 @@ public class RedBoss : MonoBehaviour
     [SerializeField] float headGunsCadence;
     [SerializeField] int headGunsSalvo;
     bool headGunsAreFiring = false;
+    [Space]
     [SerializeField] GameObject headCannon;
     [SerializeField] GameObject headCannonBullet;
     [SerializeField] GameObject headCannonCrosshair;
     [SerializeField] GameObject headCannonLine;
+    public GameObject laser; //declarado aqui para poder ser destruído na função de morte do chefe - partdamage também destroi
     [SerializeField] float headCannonBulletSpeed;
     [SerializeField] float headCannonFireCountdown;
     [SerializeField] float headCannonCadence;
     [SerializeField] int headCannonSalvo;
     bool headCannonIsFiring = false;
+    [Space]
     [SerializeField] GameObject wingGunL;    
     [SerializeField] GameObject wingGunR;
     [SerializeField] float wingGunsBulletSpeed;
@@ -45,6 +45,7 @@ public class RedBoss : MonoBehaviour
     [SerializeField] float wingGunsCadence;
     [SerializeField] int wingGunsSalvo;
     bool wingGunsAreFiring = false;
+    [Space]
     [SerializeField] GameObject mainCannon;
     [SerializeField] GameObject mainCannonBarrel;
     [SerializeField] GameObject mainCannonBullet;    
@@ -54,7 +55,7 @@ public class RedBoss : MonoBehaviour
     [SerializeField] float mainCannonFireCountdown;
     [SerializeField] float mainCannonCadence;
     [SerializeField] int mainCannonSalvo;
-    bool mainCannonIsFiring;
+    bool mainCannonIsFiring;    
 
     int weaponTurn = 0; // 1= topgun, 2= headcannon, 3= maincannon
     int gunTurn = 1; //1= headguns, 2=wingguns
@@ -64,6 +65,8 @@ public class RedBoss : MonoBehaviour
     float headCannonOriginalCD;
     float wingGunsOriginalCD;
     float mainCannonOriginalCD;
+
+    bool isDying = false;
 
     [Header("Fire Points")]
     [SerializeField] Transform topGunFPL;
@@ -75,11 +78,20 @@ public class RedBoss : MonoBehaviour
     [SerializeField] Transform wingGunRFP;
     [SerializeField] Transform mainCannonFP;
 
-    [Header("Debug")]
-    Transform player;
-    public static RedBoss redBoss;
+    [Header("Death")]
+    [SerializeField] GameObject smallExplosion;
+    [SerializeField] GameObject bigExplosion;
+    [SerializeField] AudioClip sexpAudio;
+    [SerializeField] AudioClip bexpAudio;
+    [SerializeField] Image flashScreen;
+
+    [Header("Debug - DO NOT CHANGE")]
+    [SerializeField]Transform player;    
     public int partsDestroyed = 0;
 
+    public static RedBoss redBoss;
+
+    CamShake camshake;
 
     void Start ()
     {
@@ -89,28 +101,40 @@ public class RedBoss : MonoBehaviour
         headCannonOriginalCD = headCannonFireCountdown;
         wingGunsOriginalCD = wingGunsFireCountdown;
         mainCannonOriginalCD = mainCannonFireCountdown;
-        player = FindObjectOfType<Player>().transform;        
-	}
+        player = FindObjectOfType<Player>().transform;
+        camshake = FindObjectOfType<Camera>().GetComponent<CamShake>();
+
+    }
 	
 	
 	void Update ()
     {
-        MoveToPlayer();
-        if ((headGunL != null || headGunR != null) && gunTurn == 1) headGunsFireCountdown -= Time.deltaTime; else if (gunTurn == 1) gunTurn = 2;
-        if (headGunsFireCountdown < 0 && !headGunsAreFiring) { StartCoroutine(HeadGunsFire()); headGunsAreFiring = true; }
+        if (!isDying)
+        {
+            if (partsDestroyed >= 3)
+            {
+                StopAllCoroutines();
+                StartCoroutine(Death());
+                isDying = true;
+            }
 
-        if ((wingGunL != null || wingGunR != null) && gunTurn == 2) wingGunsFireCountdown -= Time.deltaTime; else if (gunTurn == 2) gunTurn = 1;
-        if (wingGunsFireCountdown < 0 && !wingGunsAreFiring) { StartCoroutine(WingGunsFire()); wingGunsAreFiring = true; }
+            MoveToPlayer();
+            
+            if ((headGunL != null || headGunR != null) && gunTurn == 1) headGunsFireCountdown -= Time.deltaTime; else if (gunTurn == 1) gunTurn = 2;
+            if (headGunsFireCountdown < 0 && !headGunsAreFiring) { StartCoroutine(HeadGunsFire()); headGunsAreFiring = true; }
 
-        if (topGun != null && weaponTurn == 1) topGunFireCountdown -= Time.deltaTime; else if (weaponTurn == 1) weaponTurn = 2;
-        if (topGunFireCountdown < 0 && !topGunIsFiring) { StartCoroutine(TopGunFire()); topGunIsFiring = true; }        
-        
-        if (headCannon != null && weaponTurn == 2) headCannonFireCountdown -= Time.deltaTime; else if (weaponTurn == 2) weaponTurn = 3;
-        if (headCannonFireCountdown < 0 && !headCannonIsFiring) { StartCoroutine(HeadCannonFire()); headCannonIsFiring = true; }
-        
-        if(mainCannonBarrel != null && weaponTurn == 3) mainCannonFireCountdown -= Time.deltaTime; else if (weaponTurn == 3) weaponTurn = 1;
-        if (mainCannonFireCountdown < 0 && !mainCannonIsFiring) { StartCoroutine(MainCannonFire()); mainCannonIsFiring = true; }
+            if ((wingGunL != null || wingGunR != null) && gunTurn == 2) wingGunsFireCountdown -= Time.deltaTime; else if (gunTurn == 2) gunTurn = 1;
+            if (wingGunsFireCountdown < 0 && !wingGunsAreFiring) { StartCoroutine(WingGunsFire()); wingGunsAreFiring = true; }
 
+            if (topGun != null && weaponTurn == 1) topGunFireCountdown -= Time.deltaTime; else if (weaponTurn == 1) weaponTurn = 2;
+            if (topGunFireCountdown < 0 && !topGunIsFiring) { StartCoroutine(TopGunFire()); topGunIsFiring = true; }
+
+            if (headCannon != null && weaponTurn == 2) headCannonFireCountdown -= Time.deltaTime; else if (weaponTurn == 2) weaponTurn = 3;
+            if (headCannonFireCountdown < 0 && !headCannonIsFiring) { StartCoroutine(HeadCannonFire()); headCannonIsFiring = true; }
+
+            if (mainCannonBarrel != null && weaponTurn == 3) mainCannonFireCountdown -= Time.deltaTime; else if (weaponTurn == 3) weaponTurn = 1;
+            if (mainCannonFireCountdown < 0 && !mainCannonIsFiring) { StartCoroutine(MainCannonFire()); mainCannonIsFiring = true; }
+        }
     }
 
     private void MoveToPlayer()
@@ -245,7 +269,7 @@ public class RedBoss : MonoBehaviour
 
         //Vector3 putCrosshairAbovePlayer = new Vector3(0, 0, -1);
         //var crosshair = Instantiate(headCannonCrosshair, player.transform.position + putCrosshairAbovePlayer, Quaternion.identity) as GameObject;
-        var laser = Instantiate(headCannonLine, Vector3.zero, Quaternion.identity) as GameObject;        
+        laser = Instantiate(headCannonLine, Vector3.zero, Quaternion.identity) as GameObject;        
         for (int salvoCount = 1; salvoCount <= headCannonSalvo; salvoCount++)
         {            
             float lockOnCD = headCannonCadence;            
@@ -419,15 +443,42 @@ public class RedBoss : MonoBehaviour
         weaponTurn = 1;
     }
 
-    public void SetStage(int newStage)
-    {
-        stage = newStage;
-    }
-
     public void AddPartDestroyed()
     {
         partsDestroyed += 1;
-        if (partsDestroyed == 3) SetStage(2);
+    }
+
+    private IEnumerator Death()
+    {
+        if (laser != null) Destroy(laser);
+        camshake.CameraShake(0.2f, 3f);
+        float explosionTimer;
+        float startTime = Time.time;
+        do
+        {
+            explosionTimer = Time.time - startTime;
+            float randomX = Random.Range(transform.position.x - 1, transform.position.x + 1);
+            float randomY = Random.Range(transform.position.y - 3, transform.position.y + 3);
+            Vector3 randomPos = new Vector3(randomX, randomY, -1);
+            GameObject newExplosion = Instantiate(smallExplosion, randomPos, Quaternion.identity);
+            Destroy(newExplosion, 0.6f);
+            AudioSource.PlayClipAtPoint(sexpAudio, randomPos, 1f);
+            yield return new WaitForSeconds(0.25f);
+
+        } while (explosionTimer < 3);
+
+        camshake.CameraShake(1f, 3f);
+        GameObject bigExp = Instantiate(bigExplosion, transform.position, Quaternion.identity);
+        Destroy(bigExp, 6f);
+        AudioSource.PlayClipAtPoint(bexpAudio, Camera.main.transform.position, 1f);
+        yield return new WaitForSeconds(0.3f);
+        flashScreen.color = Color.white;
+        flashScreen.CrossFadeAlpha(1, 0.1f, false);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(this.gameObject);
+        flashScreen.CrossFadeAlpha(0, 0.5f, false);        
+
+        Game.game.callEnding();
     }
     
 }

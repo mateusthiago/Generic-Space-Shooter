@@ -229,25 +229,26 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnemyDeath(bool playAudio)
+    public void EnemyDeath(bool deathByPlayer)
     {
-        if (playAudio) AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
-        var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(90, 0, 0));
-        Destroy(newExplosion, 2f);
-        FindObjectOfType<GameSession>().AddScore(score);
-        DropPowerUp();
+        FindObjectOfType<EnemySpawner>().SubtractEnemyCount();
 
-        // trecho retirado de ONDESTROY
-        //if (amILastInWave == true) FindObjectOfType<EnemySpawner>().GetComponent<EnemySpawner>().LastEnemyDied(true);
+        if (deathByPlayer)
+        {
+            AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
+            FindObjectOfType<Camera>().GetComponent<CamShake>().CameraShake(score/100f, Mathf.Clamp(score/500f, 0.1f, 0.5f));
+            var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(90, 0, 0));
+            Destroy(newExplosion, 2f);
+            FindObjectOfType<GameSession>().AddScore(score);
+            DropPowerUp();
+        }        
+
         if (amILastInSector == true)
         {
             if (nextSector == 4) FindObjectOfType<Game>().GetComponent<Game>().CallFinalSector();
             else FindObjectOfType<Game>().GetComponent<Game>().SetSectorStarsAndShowBanner(nextSector, 2);
             FindObjectOfType<GameSession>().SetLastSector(nextSector);
-        }
-
-        FindObjectOfType<EnemySpawner>().SubtractEnemyCount();
-        // FIM DO TRECHO
+        }              
 
         Destroy(this.gameObject);
     }

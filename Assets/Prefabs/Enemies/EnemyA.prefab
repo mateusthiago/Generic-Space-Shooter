@@ -186,7 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dbefbf1b6e4274da0f2dfeb3b32a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saucerBehavior: 0
+  blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114790100079883834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -205,7 +206,12 @@ MonoBehaviour:
   deathVolume: 0.1
   powerUp: {fileID: 1554663995037974, guid: d1639647ce8c28947af170ed712e7595, type: 2}
   chance: 0.01
-  saucerBehavior: 0
+  powerUpType: 0
+  blackSaucerBehavior: 0
+  redSaucerBehavior: 0
+  scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 3
   maxFireDelay: 3
@@ -216,22 +222,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  lastEnemyDied:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: LastEnemyDied
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 1
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  voidCharge: {fileID: 0}
 --- !u!212 &212351017750576576
 SpriteRenderer:
   m_ObjectHideFlags: 1
