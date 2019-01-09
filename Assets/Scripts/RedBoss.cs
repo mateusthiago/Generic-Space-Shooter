@@ -32,6 +32,7 @@ public class RedBoss : MonoBehaviour
     [SerializeField] GameObject headCannonCrosshair;
     [SerializeField] GameObject headCannonLine;
     public GameObject laser; //declarado aqui para poder ser destruído na função de morte do chefe - partdamage também destroi
+    public GameObject crosshair;
     [SerializeField] float headCannonBulletSpeed;
     [SerializeField] float headCannonFireCountdown;
     [SerializeField] float headCannonCadence;
@@ -267,8 +268,8 @@ public class RedBoss : MonoBehaviour
         while (headCannon.transform.localScale.x < 1);
         headCannon.layer = 10;
 
-        //Vector3 putCrosshairAbovePlayer = new Vector3(0, 0, -1);
-        //var crosshair = Instantiate(headCannonCrosshair, player.transform.position + putCrosshairAbovePlayer, Quaternion.identity) as GameObject;
+        Vector3 putCrosshairAbovePlayer = new Vector3(0, 0, -1);
+        crosshair = Instantiate(headCannonCrosshair, player.transform.position + putCrosshairAbovePlayer, Quaternion.identity) as GameObject;
         laser = Instantiate(headCannonLine, Vector3.zero, Quaternion.identity) as GameObject;        
         for (int salvoCount = 1; salvoCount <= headCannonSalvo; salvoCount++)
         {            
@@ -280,18 +281,17 @@ public class RedBoss : MonoBehaviour
                 lockOnCD -= Time.deltaTime;
                 if (headCannon != null)
                 {
-                    //crosshair.transform.Rotate(0, 0, -1f);
-                    //crosshair.GetComponent<SpriteRenderer>().color = Color.Lerp(crosshair.GetComponent<SpriteRenderer>().color, new Color(255, 0, 0, 0.5f), Time.deltaTime);
-                    //crosshair.transform.localScale = Vector3.one*(lockOnCD / headCannonCadence) * headCannonCadence;
-                    //crosshair.transform.position = Vector3.Lerp(crosshair.transform.position, player.transform.position + putCrosshairAbovePlayer, rotationSpeed * Time.deltaTime);                                
+                    if (headCannon == null || player == null) { Destroy(laser); Destroy(crosshair); }
+                    crosshair.transform.Rotate(0, 0, -1f);
+                    crosshair.GetComponent<SpriteRenderer>().color = Color.Lerp(crosshair.GetComponent<SpriteRenderer>().color, new Color(255, 0, 0, 0.5f), Time.deltaTime);                    
+                    crosshair.transform.position = player.transform.position + putCrosshairAbovePlayer;
                     laserLine.SetPosition(0, headCannon.transform.position);
                     laserLine.SetPosition(1, player.transform.position);
                     laserLine.endWidth = (lockOnCD / headCannonCadence) * headCannonCadence;
-                    if (headCannon == null) Destroy(laser);
                     direction = new Vector3(player.transform.position.x - headCannon.transform.position.x, player.transform.position.y - headCannon.transform.position.y);
                     headCannon.transform.up = Vector3.Lerp(headCannon.transform.up, -direction, Time.deltaTime); //multiply deltaTime * rotationspeed for smoothing
                 }
-                else Destroy(laser);
+                else { Destroy(laser); Destroy(crosshair); }
 
                 yield return null;
             } while (lockOnCD > 0);
@@ -305,7 +305,7 @@ public class RedBoss : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.4f);
-        //Destroy(crosshair);
+        Destroy(crosshair);
         Destroy(laser);
         yield return new WaitForSeconds(1f);
 
@@ -423,17 +423,17 @@ public class RedBoss : MonoBehaviour
         {
             do
             {
-                mainCannonBarrel.transform.localScale -= new Vector3(0, 0.01f, 0);
+                if (mainCannonBarrel!=null) mainCannonBarrel.transform.localScale -= new Vector3(0, 0.01f, 0);
                 yield return null;
             }
             while (mainCannonBarrel.transform.localScale.y > 0.2f);
             do
             {
-                mainCannon.transform.position -= new Vector3(0, 0.01f, 0);
+                if (mainCannonBarrel != null) mainCannon.transform.position -= new Vector3(0, 0.01f, 0);
                 yield return null;
             }
             while (mainCannon.transform.localPosition.y > 0.75f);
-            mainCannonBarrel.layer = 2;
+            if (mainCannonBarrel != null) mainCannonBarrel.layer = 2;
         }
 
         // FIM

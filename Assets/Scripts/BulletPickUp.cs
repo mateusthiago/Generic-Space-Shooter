@@ -19,7 +19,8 @@ public class BulletPickUp : MonoBehaviour {
 
     void Start ()
     {
-        player = FindObjectOfType<Player>().gameObject;
+        if (FindObjectOfType<Player>() != null) player = FindObjectOfType<Player>().gameObject;
+        else return;
         rb = GetComponent<Rigidbody2D>();
         int[] lefOrRight = { -2, +2 };
         rb.velocity = new Vector2(lefOrRight[Random.Range(0, 1)], -3);

@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
     [Header("VoidShip")]
     [SerializeField] AudioClip voidCharge;
 
-    //bool amILastInWave = false;
     bool isInDeathFunction = false;
     bool amILastInSector = false;
     int nextSector = 0;
@@ -43,7 +42,6 @@ public class Enemy : MonoBehaviour
     GameObject player = null;
     
 
-    // Use this for initialization
     void Start ()
     {
         FindObjectOfType<EnemySpawner>().AddEnemyCount();
@@ -54,7 +52,6 @@ public class Enemy : MonoBehaviour
         }
     }   
 	
-	// Update is called once per frame
 	void Update ()
     {
         if (destroyerBehavior && !isFiring)

@@ -12,17 +12,17 @@ public class ShieldPickUp : MonoBehaviour {
     float grow = 0.4f;
 
 
-    // Use this for initialization
-    void Start ()
+    void Start()
     {
-        player = FindObjectOfType<Player>().gameObject;
+        if (FindObjectOfType<Player>() != null) player = FindObjectOfType<Player>().gameObject;
+        else return;
         rb = GetComponent<Rigidbody2D>();
         int[] lefOrRight = { -2, +2 };
         rb.velocity = new Vector2(lefOrRight[Random.Range(0, 1)], -3);
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update ()
     {        
 
         if (transform.position.x <= -5.4)

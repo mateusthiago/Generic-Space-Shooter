@@ -17,6 +17,13 @@ public class ButtonHighlighter : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }
     }
+    private void OnEnable()
+    {
+        if (defaultButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(defaultButton);
+        }
+    }
     void Update()
     {
         var selectedObj = EventSystem.current.currentSelectedGameObject;

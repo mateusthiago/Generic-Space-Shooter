@@ -53,6 +53,7 @@ public class PartDamage : MonoBehaviour
         {
             Destroy(GameObject.Find("headCannonHatch"));
             if (RedBoss.redBoss.laser != null) Destroy(RedBoss.redBoss.laser);
+            if (RedBoss.redBoss.crosshair != null) Destroy(RedBoss.redBoss.crosshair);
             RedBoss.redBoss.AddPartDestroyed();
         }
 

@@ -13,8 +13,11 @@ public class Game : MonoBehaviour
     [SerializeField] GameObject speedParticleFX;
     [SerializeField] GameObject enemySpawner;
     [SerializeField] GameObject titleCanvas;
+    [SerializeField] GameObject infoCanvas;
     [SerializeField] GameObject gameCanvas;
     [SerializeField] GameObject startButton;
+    [SerializeField] GameObject infoButton;
+    [SerializeField] Button backButton;
     [SerializeField] TextMeshProUGUI startButtontText;
     [SerializeField] TextMeshProUGUI sectorBanner;
     [SerializeField] AudioClip pauseSFX;
@@ -22,16 +25,14 @@ public class Game : MonoBehaviour
     [SerializeField] AudioClip endingBoostSFX;
     [SerializeField] AudioClip endingWarpSFX;
     [SerializeField] Image fadeScreen;
+    [SerializeField] TextMeshProUGUI endGameText;
     [SerializeField] public bool skipIntro;
     [SerializeField] int sector = 1;
     [SerializeField] bool startingWaveSetInEnemySpawner = false;
     [SerializeField] bool dontShowMenu = false;
 
-    [Header("Debug")]
-    public AnimationCurve pingpong = new AnimationCurve();
-
-
-    bool gameIsPaused = false;
+    bool infoScreen = false;
+    public bool gameIsPaused = false;
     bool gameStarted = false;
 
     public static Game game;
@@ -43,6 +44,7 @@ public class Game : MonoBehaviour
         if (FindObjectOfType<GameSession>().GetHiScore() > 0) skipIntro = true;
         sector = FindObjectOfType<GameSession>().GetLastSector();
         fadeScreen.CrossFadeAlpha(0, 0, false);
+        endGameText.CrossFadeAlpha(0, 0, false);
     }
 
     private void ShowMenu()
@@ -61,6 +63,25 @@ public class Game : MonoBehaviour
         }
     }
 
+    public void ShowInfo()
+    {
+        infoScreen = true;
+        infoButton.GetComponent<ButtonSound>().OnDeselect(null);
+        titleCanvas.SetActive(false);        
+        infoCanvas.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(backButton.gameObject);
+        backButton.OnSelect(null);
+    }
+
+    public void backToTitle()
+    {     
+        infoCanvas.SetActive(false);
+        titleCanvas.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(startButton);
+        startButton.GetComponent<Button>().OnSelect(null);
+        infoScreen = false;
+    }
+
 
 
     public void StartGame()
@@ -75,6 +96,7 @@ public class Game : MonoBehaviour
             AudioSource.PlayClipAtPoint(pauseSFX, Camera.main.transform.position, 0.2f);
             titleCanvas.SetActive(false);
             gameIsPaused = false;
+            fadeScreen.CrossFadeAlpha(0, 0, true);
         }
 
     }
@@ -85,6 +107,7 @@ public class Game : MonoBehaviour
         {
             if (!gameIsPaused)
             {
+                fadeScreen.CrossFadeAlpha(0.5f, 0, true);
                 AudioSource.PlayClipAtPoint(pauseSFX, Camera.main.transform.position, 0.2f);
                 Time.timeScale = 0;                
                 EventSystem.current.SetSelectedGameObject(startButton);
@@ -93,7 +116,7 @@ public class Game : MonoBehaviour
                 titleCanvas.SetActive(true);
                 gameIsPaused = true;
             }
-            else if (gameIsPaused)
+            else if (gameIsPaused && !infoScreen)
             {
                 StartGame();
                 AudioSource.PlayClipAtPoint(pauseSFX, Camera.main.transform.position, 0.2f);
@@ -188,14 +211,17 @@ public class Game : MonoBehaviour
         StartCoroutine(DelayGameOver());                        
     }
 
-    public IEnumerator DelayGameOver()
+    public IEnumerator DelayGameOver(bool ending = false)
     {
         yield return new WaitForSeconds(1f);
         //fadeScreen.CrossFadeAlpha(0, 0, false);
         //fadeScreen.gameObject.SetActive(true);
         fadeScreen.CrossFadeAlpha(1, 2f, false);
-        yield return new WaitForSeconds(3f);
+        if (ending) endGameText.text = "congratulations!";
+        endGameText.CrossFadeAlpha(1, 3f, false);
+        yield return new WaitForSeconds(4f);
         FindObjectOfType<GameSession>().ResetScore();
+        if (ending) FindObjectOfType<GameSession>().SetLastSector(1);
         SceneManager.LoadScene(0);
     }
 
@@ -260,6 +286,7 @@ public class Game : MonoBehaviour
             yield return null;
         } while (player.transform.position != gotoPos);
 
+        // SONS, CAMERA SHAKE E RASTRO DA NAVE
         AudioSource.PlayClipAtPoint(endingBoostSFX, Camera.main.transform.position);
         Camera.main.GetComponent<CamShake>().CameraShake(0.1f, 1);
         yield return new WaitForSeconds(1);
@@ -268,6 +295,7 @@ public class Game : MonoBehaviour
         newTrail.transform.Rotate(-270, 0, 0);
         Camera.main.GetComponent<CamShake>().CameraShake(0.5f, 0.5f);
 
+        // PREPARA PLAYER OBJECT E ANIMA SAÍDA DA TELA
         player.GetComponent<CapsuleCollider2D>().enabled = false;
         playerPos = player.transform.position;
         gotoPos = new Vector3(0, 25, player.transform.position.y);
@@ -278,21 +306,20 @@ public class Game : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / lerpTime;
             t = t * t * t * (t * (6f * t - 15f) + 10f); // smoothstep formula - https://chicounity3d.wordpress.com/2014/05/23/how-to-lerp-like-a-pro/
-            pingpong.AddKey(Time.time, t);
             player.transform.position = Vector3.Lerp(playerPos, gotoPos, t);
             yield return null;
         } while (elapsedTime < lerpTime);
 
-        StartCoroutine(DelayGameOver());
+        StartCoroutine(DelayGameOver(true));
 
     }
 
-    void OnGUI()
-    {
-        if (!gameStarted)
-        {
-            skipIntro = GUI.Toggle(new Rect(10, 10, 200, 100), skipIntro, "Skip Intro");
-        }        
-    }
+    //void OnGUI()
+    //{
+    //    if (!gameStarted)
+    //    {
+    //        skipIntro = GUI.Toggle(new Rect(10, 10, 200, 100), skipIntro, "Skip Intro");
+    //    }        
+    //}
 
 }

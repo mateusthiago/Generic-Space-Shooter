@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     void Update ()
     {       
-        if (canMove)
+        if (canMove && !Game.game.gameIsPaused)
         {
             UpdateMove();
             Fire();
