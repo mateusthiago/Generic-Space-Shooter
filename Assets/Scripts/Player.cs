@@ -35,16 +35,18 @@ public class Player : MonoBehaviour
     Coroutine autoFire;
     bool isFiring;
 
-    public static Player player;
-    
+    public static Player instance;
+    DeviceType deviceType;
+    Vector3 previousTouchPos;
+
 
     void Start ()
     {
-        player = this;
+        deviceType = SystemInfo.deviceType;
+        instance = this;
         playerRB = GetComponent<Rigidbody2D>();
         SetUpMoveBoundaries();
-        startInvul = isInvulnerable;
-        //StartCoroutine(AutoFire());
+        startInvul = isInvulnerable;                
 	}
 
     void Update ()
@@ -52,40 +54,59 @@ public class Player : MonoBehaviour
         if (canMove && !Game.game.gameIsPaused)
         {
             UpdateMove();
-            Fire();
+            if(deviceType == DeviceType.Handheld && !isFiring) // correto é handheld
+            {
+                isFiring = true;
+                StartCoroutine(AutoFire());
+            }
+            else if(deviceType == DeviceType.Desktop) Fire();
         }        
 	}
 
-
-    //private void FixedUpdate()
-    //{
-    //    if (canMove)
-    //    {
-    //        FixedUpdateMove();
-    //    }
-    //}
-
-
-    public void UpdateMove(float horizontal = 0, float vertical = 0)
+    public void UpdateMove()
     {
-        Vector3 input = new Vector3 (horizontal, vertical) * Time.deltaTime * moveSpeed;
-        if (horizontal==0 && vertical ==0) input = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * Time.deltaTime * moveSpeed;
-        Vector3 clampedNewPos = transform.position + input;
-        clampedNewPos.x = Mathf.Clamp(clampedNewPos.x, xMin, xMax);
-        clampedNewPos.y = Mathf.Clamp(clampedNewPos.y, yMin, yMax);
+        Vector3 inputVector;
 
-        transform.position = clampedNewPos;
-    }
-        
-        
-    private void FixedUpdateMove()
-    {         
-        //var deltaX = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        //var deltaY = Input.GetAxisRaw("Vertical") * moveSpeed;
+        if (deviceType == DeviceType.Handheld) // correto é handheld
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);                
+                if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary)
+                {
+                    previousTouchPos = Camera.main.ScreenToWorldPoint(touch.position);                    
+                }
+                else if (touch.phase == TouchPhase.Moved)
+                {
+                    Vector3 newTouchPos = Camera.main.ScreenToWorldPoint(touch.position);
+                    inputVector = newTouchPos;
+                    inputVector.z = 0;
+                    previousTouchPos.z = 0;
+                    Vector3 direction = inputVector - previousTouchPos;
+                    transform.Translate(direction);
+                    if (transform.position.x < xMin || transform.position.x > xMax || transform.position.y < yMin || transform.position.y > yMax)
+                    {
+                        Vector3 clampedNewPos = transform.position;
+                        clampedNewPos.x = Mathf.Clamp(clampedNewPos.x, xMin, xMax);
+                        clampedNewPos.y = Mathf.Clamp(clampedNewPos.y, yMin, yMax);
+                        transform.position = clampedNewPos;
+                    }
+                    
+                    previousTouchPos = newTouchPos;
+                }
+            }
+            else return;          
+        }
+        else if (deviceType == DeviceType.Desktop)
+        {
+            inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * Time.deltaTime * moveSpeed;
+            Vector3 clampedNewPos = transform.position + inputVector;
+            clampedNewPos.x = Mathf.Clamp(clampedNewPos.x, xMin, xMax);
+            clampedNewPos.y = Mathf.Clamp(clampedNewPos.y, yMin, yMax);
 
-        playerRB.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * moveSpeed;
-        Debug.Log(playerRB.velocity);
-    }
+            transform.position = clampedNewPos;
+        }
+    }   
 
     private void Fire()
     {
@@ -236,11 +257,13 @@ public class Player : MonoBehaviour
 
     private void PlayerDeath()
     {
+        Camera.main.GetComponent<CamShake>().CameraShake(2, 1);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
         var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.identity);
         Destroy(newExplosion, 2f);
         FindObjectOfType<Game>().GameOver();
         Destroy(this.gameObject);
+        Game.game.SetGameIsOn(false);
     }
 
     public int GetBulletType() { return bulletType; }

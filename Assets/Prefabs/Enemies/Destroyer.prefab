@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d06e5deb77ab2974fbe8414c2493eb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15000
+  health: 12000
   score: 888
   deathVFX: {fileID: 1051936681136180, guid: 50f99785f3273dc44a56560846b330f4, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}

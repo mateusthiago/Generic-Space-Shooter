@@ -15,12 +15,16 @@ public class BackgroundScroller : MonoBehaviour {
     Material myMaterial;
     Vector2 offset;
 
-    
+    public ParticleSystem.MainModule bgStars;
+    public ParticleSystem.MainModule fgStars;
+
 
     private void Start()
     {
         myMaterial = gameObject.GetComponent<Renderer>().material;
-        offset = new Vector2(0f, scrollSpeed);        
+        offset = new Vector2(0f, scrollSpeed);
+        bgStars = backgroundStars.GetComponent<ParticleSystem>().main;
+        fgStars = foregroundStars.GetComponent<ParticleSystem>().main;
     }
 
     void Update ()
@@ -30,10 +34,7 @@ public class BackgroundScroller : MonoBehaviour {
 
     public IEnumerator GameIntroScroll()
     {
-        var bgStars = backgroundStars.GetComponent<ParticleSystem>().main;
-        var fgStars = foregroundStars.GetComponent<ParticleSystem>().main;
         Vector2 introScroll = new Vector2(0f, scrollSpeed);
-
         for (float i = 0.05f; i <= 1f; i += 0.05f)
         {
             bgStars.simulationSpeed += i;
@@ -42,15 +43,12 @@ public class BackgroundScroller : MonoBehaviour {
             offset = introScroll;            
             yield return new WaitForSeconds(0.1f);
         }
-        
+
     }
 
     public IEnumerator NormalScroll()
     {
-        var bgStars = backgroundStars.GetComponent<ParticleSystem>().main;
-        var fgStars = foregroundStars.GetComponent<ParticleSystem>().main;
         Vector2 introScroll = new Vector2(0f, scrollSpeed);
-
         for (float i = 1f; i >= 0.05f; i -= 0.05f)
         {
             bgStars.simulationSpeed += 0.05f - i;

@@ -22,7 +22,7 @@ public class Shield : MonoBehaviour {
 
     public void DestroyShield()
     {
-        AudioSource.PlayClipAtPoint(shieldOffSFX, Camera.main.transform.position, 0.5f);
+        AudioSource.PlayClipAtPoint(shieldOffSFX, Camera.main.transform.position, 1f);
         var newHitFX = Instantiate(hitFX, player.GetComponent<Transform>());
         Destroy(newHitFX, 0.5f);
         Destroy(this.gameObject);            

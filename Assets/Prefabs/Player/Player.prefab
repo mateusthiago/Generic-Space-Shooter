@@ -88,7 +88,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -135,7 +135,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1049457089568694, guid: ed3e4ce307fae684da88e3bce6975003,
     type: 2}
   bulletSFX: {fileID: 8300000, guid: 6081cb13ace0de04f9a08b4566ce5da9, type: 3}
-  bulletVolume: 0.02
+  bulletVolume: 0.01
   bulletSpeed: 20
   bulletCadence: 0.1
 --- !u!198 &198588767470351038

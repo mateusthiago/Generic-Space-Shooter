@@ -17,6 +17,8 @@ public class Game : MonoBehaviour
     [SerializeField] GameObject gameCanvas;
     [SerializeField] GameObject startButton;
     [SerializeField] GameObject infoButton;
+    [SerializeField] GameObject quitButton;
+    [SerializeField] GameObject mobilePauseButton;
     [SerializeField] Button backButton;
     [SerializeField] TextMeshProUGUI startButtontText;
     [SerializeField] TextMeshProUGUI sectorBanner;
@@ -33,13 +35,17 @@ public class Game : MonoBehaviour
 
     bool infoScreen = false;
     public bool gameIsPaused = false;
-    bool gameStarted = false;
+    bool gameIsOn = false;
 
     public static Game game;
+
+    public AnimationCurve debugCurve;
 	
 	void Start ()
     {
         game = this;
+        if (SystemInfo.deviceType != DeviceType.Handheld) mobilePauseButton.SetActive(false);
+        if (Application.platform == RuntimePlatform.WebGLPlayer) quitButton.SetActive(false);
         if (!dontShowMenu) ShowMenu();
         if (FindObjectOfType<GameSession>().GetHiScore() > 0) skipIntro = true;
         sector = FindObjectOfType<GameSession>().GetLastSector();
@@ -47,7 +53,7 @@ public class Game : MonoBehaviour
         endGameText.CrossFadeAlpha(0, 0, false);
 
         // set the desired aspect ratio (the values in this example are
-        // hard-coded for 16:9, but you could make them into public
+        // hard-coded for 9:16, but you could make them into public
         // variables instead so you can set them at design time)
         float targetaspect = 9.0f / 16.0f;
 
@@ -97,7 +103,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel") && gameStarted)
+        if (Input.GetButtonDown("Cancel") && gameIsOn)
         {
             PauseGame();
         }
@@ -126,11 +132,11 @@ public class Game : MonoBehaviour
 
     public void StartGame()
     {
-        if (!gameStarted)
+        if (!gameIsOn)
         {
             StartCoroutine(GameIntro());            
         }
-        else if (gameIsPaused && gameStarted)
+        else if (gameIsPaused && gameIsOn)
         {
             Time.timeScale = 1;
             AudioSource.PlayClipAtPoint(pauseSFX, Camera.main.transform.position, 0.2f);
@@ -143,7 +149,7 @@ public class Game : MonoBehaviour
 
     public void PauseGame()
     {
-        if (gameStarted)
+        if (gameIsOn)
         {
             if (!gameIsPaused)
             {
@@ -176,33 +182,15 @@ public class Game : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
 
-            player = Instantiate(playerPrefab, new Vector3(0, -11f, -1), Quaternion.identity);
+            player = Instantiate(playerPrefab, new Vector3(0, -15f, -1), Quaternion.identity);
             GameObject newTrail = Instantiate(speedParticleFX, player.transform);
-            newTrail.transform.Rotate(-270, 0, 0);
-            player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 15f);
-            AudioSource.PlayClipAtPoint(introLaunchSFX, Camera.main.transform.position, 0.6f);
-
-            while (player.transform.position.y < 0)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-
-            player.GetComponent<Rigidbody2D>().gravityScale = 0f;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-            yield return new WaitForSeconds(1f);
-
-            player.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
-            newTrail.GetComponent<ParticleSystem>().Stop();
+            AudioSource.PlayClipAtPoint(introLaunchSFX, Camera.main.transform.position, 0.6f);            
+            StartCoroutine(LerpPlayerToPosition(0, 3, 2, true));
+            yield return new WaitForSeconds(1.8f);
+            newTrail.GetComponent<ParticleSystem>().Stop();        
+            yield return new WaitForSeconds(0.2f);
             StartCoroutine(FindObjectOfType<BackgroundScroller>().GetComponent<BackgroundScroller>().NormalScroll());
-
-            while (player.transform.position.y > -7)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-
-            player.GetComponent<Rigidbody2D>().gravityScale = 0f;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            yield return StartCoroutine(LerpPlayerToPosition(0, -7, 2.5f, true));
             Destroy(newTrail);
 
             yield return new WaitForSeconds(1f);
@@ -216,17 +204,17 @@ public class Game : MonoBehaviour
         {
             titleCanvas.SetActive(false);
             player = Instantiate(playerPrefab, new Vector3(0, -7f, -1), Quaternion.identity);
-            player.GetComponent<Rigidbody2D>().gravityScale = 0f;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            player.GetComponent<Player>().SetBulletType(sector);
-            player.GetComponent<Player>().ToggleMove(true);
+            yield return null;
+            Player.instance.SetBulletType(sector);
+            if (sector == 4) Player.instance.PickUpShield();
+            Player.instance.ToggleMove(true);
             gameCanvas.SetActive(true);
             if (!startingWaveSetInEnemySpawner) enemySpawner.GetComponent<EnemySpawner>().SetLastSector(sector);
             enemySpawner.SetActive(true);            
         }
 
         SetSectorStarsAndShowBanner(sector, 0);
-        gameStarted = true;
+        gameIsOn = true;
     }    
 
     public void SetSectorStarsAndShowBanner(int newSector, int wait)
@@ -254,8 +242,6 @@ public class Game : MonoBehaviour
     public IEnumerator DelayGameOver(bool ending = false)
     {
         yield return new WaitForSeconds(1f);
-        //fadeScreen.CrossFadeAlpha(0, 0, false);
-        //fadeScreen.gameObject.SetActive(true);
         fadeScreen.CrossFadeAlpha(1, 2f, false);
         if (ending) endGameText.text = "congratulations!";
         endGameText.CrossFadeAlpha(1, 3f, false);
@@ -270,88 +256,109 @@ public class Game : MonoBehaviour
         Application.Quit();
     }
 
-    public bool GameStarted()
+    public void SetGameIsOn(bool state)
     {
-        return gameStarted;
+        gameIsOn = state;
     }
 
-    public void callEnding()
+    public bool getGameIsOn()
+    {
+        return gameIsOn;
+    }
+
+    public void CallEnding()
     {
         StartCoroutine(Ending());
     }
 
-    public IEnumerator Ending()
+    public IEnumerator MovePlayerToPosition(float x, float y)
     {
-        player.GetComponent<Player>().ToggleMove(false);
-        yield return new WaitForSeconds(3);        
-        Vector3 playerPos = player.transform.position;
-        Vector3 gotoPos = new Vector3(0, -7, player.transform.position.z);
+        Vector3 targetPos = new Vector3(x, y, player.transform.position.z);
         do
         {
-            if (player.transform.position.x > gotoPos.x)
-                if (player.transform.position.y > gotoPos.y)
-                    Player.player.UpdateMove(-0.5f, -0.5f);
-                else if (player.transform.position.y < gotoPos.y)
-                    Player.player.UpdateMove(-0.5f, 0.5f);
-                else
-                    Player.player.UpdateMove(-0.5f, 0);
+            Vector3 direction = (targetPos - player.transform.position);
+            if (direction.magnitude < 0.1f) player.transform.position = targetPos;
+            else player.transform.Translate(direction.normalized * Time.deltaTime * Player.instance.GetMoveSpeed());
+            yield return null;            
+        } while (player.transform.position != targetPos);
 
-            else if (player.transform.position.x < gotoPos.x)
-                if (player.transform.position.y > gotoPos.y)
-                    Player.player.UpdateMove(0.5f, -0.5f);
-                else if (player.transform.position.y < gotoPos.y)
-                    Player.player.UpdateMove(0.5f, 0.5f);
-                else
-                    Player.player.UpdateMove(0.5f, 0);
+        //do
+        //{
+        //    if (player.transform.position.x > targetPos.x)
+        //        if (player.transform.position.y > targetPos.y)
+        //            Player.player.UpdateMove(true, -0.5f, -0.5f);
+        //        else if (player.transform.position.y < targetPos.y)
+        //            Player.player.UpdateMove(true, -0.5f, 0.5f);
+        //        else
+        //            Player.player.UpdateMove(true, -0.5f, 0);
 
-            else if (player.transform.position.y > gotoPos.y)
-                if (player.transform.position.x > gotoPos.x)
-                    Player.player.UpdateMove(-0.5f, -0.5f);
-                else if (player.transform.position.x < gotoPos.x)
-                    Player.player.UpdateMove(0.5f, -0.5f);
-                else
-                    Player.player.UpdateMove(0, -0.5f);
+        //    else if (player.transform.position.x < targetPos.x)
+        //        if (player.transform.position.y > targetPos.y)
+        //            Player.player.UpdateMove(true, 0.5f, -0.5f);
+        //        else if (player.transform.position.y < targetPos.y)
+        //            Player.player.UpdateMove(true, 0.5f, 0.5f);
+        //        else
+        //            Player.player.UpdateMove(true, 0.5f, 0);
 
-            else if (player.transform.position.y < gotoPos.y)
-                if (player.transform.position.x > gotoPos.x)
-                    Player.player.UpdateMove(-0.5f, 0.5f);
-                else if (player.transform.position.x < gotoPos.x)
-                    Player.player.UpdateMove(0.5f, 0.5f);
-                else
-                    Player.player.UpdateMove(0, 0.5f);
+        //    else if (player.transform.position.y > targetPos.y)
+        //        if (player.transform.position.x > targetPos.x)
+        //            Player.player.UpdateMove(true, -0.5f, -0.5f);
+        //        else if (player.transform.position.x < targetPos.x)
+        //            Player.player.UpdateMove(true, 0.5f, -0.5f);
+        //        else
+        //            Player.player.UpdateMove(true, 0, -0.5f);
 
-            if (Mathf.Abs(player.transform.position.x - gotoPos.x) < 0.1 && Mathf.Abs(player.transform.position.y - gotoPos.y) < 0.1)
-                player.transform.position = gotoPos;
+        //    else if (player.transform.position.y < targetPos.y)
+        //        if (player.transform.position.x > targetPos.x)
+        //            Player.player.UpdateMove(true, -0.5f, 0.5f);
+        //        else if (player.transform.position.x < targetPos.x)
+        //            Player.player.UpdateMove(true, 0.5f, 0.5f);
+        //        else
+        //            Player.player.UpdateMove(true, 0, 0.5f);
 
-            yield return null;
-        } while (player.transform.position != gotoPos);
+        //    if (Mathf.Abs(player.transform.position.x - targetPos.x) < 0.1 && Mathf.Abs(player.transform.position.y - targetPos.y) < 0.1)
+        //        player.transform.position = targetPos;
 
-        // SONS, CAMERA SHAKE E RASTRO DA NAVE
-        AudioSource.PlayClipAtPoint(endingBoostSFX, Camera.main.transform.position);
-        Camera.main.GetComponent<CamShake>().CameraShake(0.1f, 1);
-        yield return new WaitForSeconds(1);
-        AudioSource.PlayClipAtPoint(endingWarpSFX, Camera.main.transform.position);
-        GameObject newTrail = Instantiate(speedParticleFX, player.transform);
-        newTrail.transform.Rotate(-270, 0, 0);
-        Camera.main.GetComponent<CamShake>().CameraShake(0.5f, 0.5f);
+        //    yield return null;
+        //} while (player.transform.position != targetPos);
+    }
 
-        // PREPARA PLAYER OBJECT E ANIMA SAÍDA DA TELA
-        player.GetComponent<CapsuleCollider2D>().enabled = false;
-        playerPos = player.transform.position;
-        gotoPos = new Vector3(0, 25, player.transform.position.y);
-        float lerpTime = 1f;
+    IEnumerator LerpPlayerToPosition (float x, float y, float duration, bool smoothstep)
+    {        
+        Vector3 targetPos = new Vector3(x, y, player.transform.position.z);
+        Vector3 playerPreviousPos = player.transform.position;
         float elapsedTime = 0;
         do
         {
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / lerpTime;
-            t = t * t * t * (t * (6f * t - 15f) + 10f); // smoothstep formula - https://chicounity3d.wordpress.com/2014/05/23/how-to-lerp-like-a-pro/
-            player.transform.position = Vector3.Lerp(playerPos, gotoPos, t);
+            float t = elapsedTime / duration;
+            if (smoothstep) t = t * t * t * (t * (6f * t - 15f) + 10f); // smootherstep formula - https://chicounity3d.wordpress.com/2014/05/23/how-to-lerp-like-a-pro/
+            debugCurve.AddKey(Time.time, t);
+            player.transform.position = Vector3.Lerp(playerPreviousPos, targetPos, t);
             yield return null;
-        } while (elapsedTime < lerpTime);
+        } while (elapsedTime < duration);
+    }
 
+    public IEnumerator Ending()
+    {
+        gameIsOn = false;
+        player.GetComponent<Player>().ToggleMove(false);
+        yield return new WaitForSeconds(3);       
+        yield return StartCoroutine(MovePlayerToPosition(0, -8));
+
+        // SONS, CAMERA SHAKE E RASTRO DA NAVE
+        AudioSource.PlayClipAtPoint(endingBoostSFX, Camera.main.transform.position);
+        Camera.main.GetComponent<CamShake>().CameraShake(0.1f, 1);
+        Instantiate(speedParticleFX, player.transform);
+        yield return StartCoroutine(LerpPlayerToPosition(0, -4, 1.5f, false));
+        StartCoroutine(LerpPlayerToPosition(0, 25, 1f, false));
+        AudioSource.PlayClipAtPoint(endingWarpSFX, Camera.main.transform.position);        
+        Camera.main.GetComponent<CamShake>().CameraShake(1f, 0.5f);
+        player.GetComponent<CapsuleCollider2D>().enabled = false; // desabilita collider pra nao ser destruido no shredder
+        //yield return StartCoroutine(LerpPlayerToPosition(0, 25, 1.8f, true));
+
+        yield return new WaitForSeconds(1);
         StartCoroutine(DelayGameOver(true));
-
     }
 
     //void OnGUI()

@@ -156,6 +156,7 @@ public class RedBoss : MonoBehaviour
 
     IEnumerator TopGunFire()
     {
+        AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.3f);
         transform.Find("topGunHatch").gameObject.GetComponent<Animator>().SetTrigger("open");
         yield return new WaitForSeconds(1.5f);
         do
@@ -166,7 +167,6 @@ public class RedBoss : MonoBehaviour
 
         topGun.layer = 10;
 
-        AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.2f);
         float t = 0;
         do
         {
@@ -190,19 +190,16 @@ public class RedBoss : MonoBehaviour
                 GameObject newTopGunBulletR = Instantiate(topGunBullet, topGunFPR.position, topGunFPR.rotation);
                 newTopGunBulletR.GetComponent<Rigidbody2D>().velocity = newTopGunBulletR.transform.up * -topGunBulletSpeed;
                 newTopGunBulletR.GetComponent<Rigidbody2D>().AddTorque(400f);
-                AudioSource.PlayClipAtPoint(topGunBulletSFX, Camera.main.transform.position, 0.07f);
+                AudioSource.PlayClipAtPoint(topGunBulletSFX, Camera.main.transform.position, 0.05f);
 
                 t += topGunCadence / (topGunCadence * (topGunSalvo - 1));
                 float lerp = Mathf.Lerp(topGunRotation, topGunRotation * -1, t);
                 topGun.transform.rotation = Quaternion.Euler(0, 0, lerp);
                 yield return new WaitForSeconds(topGunCadence);
             }
-        }
-
+        }        
         
-        AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.2f);
-        t = 0;
-        
+        t = 0;       
         
         do
         {
@@ -221,7 +218,12 @@ public class RedBoss : MonoBehaviour
             if (topGun != null) topGun.transform.localScale += new Vector3(-0.01f, -0.01f, 0);
             yield return null;
         } while (topGun != null && topGun.transform.localScale.x > 0.4);
-        if (topGun != null) transform.Find("topGunHatch").gameObject.GetComponent<Animator>().SetTrigger("close");        
+
+        if (topGun != null)
+        {
+            AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.3f);
+            transform.Find("topGunHatch").gameObject.GetComponent<Animator>().SetTrigger("close");
+        }
 
         topGunRotation *= -1;
         topGunFireCountdown = topGunOriginalCD;            
@@ -237,7 +239,7 @@ public class RedBoss : MonoBehaviour
             {
                 GameObject newHeadGunBulletL = Instantiate(headGunsBullet, headGunLFP.position, Quaternion.identity);
                 newHeadGunBulletL.GetComponent<Rigidbody2D>().velocity = newHeadGunBulletL.transform.up * -headGunsBulletSpeed;
-                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.05f);
+                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.03f);
                 yield return new WaitForSeconds(headGunsCadence);
             }            
             
@@ -245,7 +247,7 @@ public class RedBoss : MonoBehaviour
             {
                 GameObject newHeadGunBulletR = Instantiate(headGunsBullet, headGunRFP.position, Quaternion.identity);
                 newHeadGunBulletR.GetComponent<Rigidbody2D>().velocity = newHeadGunBulletR.transform.up * -headGunsBulletSpeed;
-                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.05f);
+                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.03f);
                 yield return new WaitForSeconds(headGunsCadence);
             }
         }
@@ -256,8 +258,9 @@ public class RedBoss : MonoBehaviour
 
     IEnumerator HeadCannonFire()
     {
-        float rotationSpeed = 8f;        
+        float rotationSpeed = 8f;
 
+        AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.3f);
         transform.Find("headCannonHatch").gameObject.GetComponent<Animator>().SetTrigger("open");
         yield return new WaitForSeconds(1.5f);
         do
@@ -324,6 +327,7 @@ public class RedBoss : MonoBehaviour
                 yield return null;
             }
             while (headCannon.transform.localScale.x > 0.7);
+            AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.3f);
             transform.Find("headCannonHatch").gameObject.GetComponent<Animator>().SetTrigger("close");
 
             headCannonFireCountdown = headCannonOriginalCD;
@@ -340,14 +344,14 @@ public class RedBoss : MonoBehaviour
             {
                 GameObject newWingGunBulletL = Instantiate(headGunsBullet, wingGunLFP.position, Quaternion.identity);
                 newWingGunBulletL.GetComponent<Rigidbody2D>().velocity = newWingGunBulletL.transform.up * -wingGunsBulletSpeed;
-                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.05f);                
+                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.03f);                
             }
 
             if (wingGunR != null)
             {
                 GameObject newWingGunBulletR = Instantiate(headGunsBullet, wingGunRFP.position, Quaternion.identity);
                 newWingGunBulletR.GetComponent<Rigidbody2D>().velocity = newWingGunBulletR.transform.up * -wingGunsBulletSpeed;
-                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.05f);
+                AudioSource.PlayClipAtPoint(headGunsSFX, Camera.main.transform.position, 0.03f);
             }
             yield return new WaitForSeconds(wingGunsCadence);
         }
@@ -381,7 +385,7 @@ public class RedBoss : MonoBehaviour
         // SEGUIR PLAYER
         float lockOnCD = headCannonCadence -0.5f;
         Vector3 direction;
-        AudioSource.PlayClipAtPoint(mainCannonCharge, Camera.main.transform.position, 0.3f);
+        if(mainCannonBarrel != null) AudioSource.PlayClipAtPoint(mainCannonCharge, Camera.main.transform.position, 0.3f);
         GetComponent<ParticleSystem>().Play();
         do
         {
@@ -418,7 +422,7 @@ public class RedBoss : MonoBehaviour
 
         // ANIMAÇÃO DE DESARMAR
         yield return new WaitForSeconds(1f);
-        AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.2f);
+        if (mainCannonBarrel != null) AudioSource.PlayClipAtPoint(topGunMoveSFX, Camera.main.transform.position, 0.3f);
         if (mainCannonBarrel != null)
         {
             do
@@ -432,7 +436,7 @@ public class RedBoss : MonoBehaviour
                 if (mainCannonBarrel != null) mainCannon.transform.position -= new Vector3(0, 0.01f, 0);
                 yield return null;
             }
-            while (mainCannon.transform.localPosition.y > 0.75f);
+            while (mainCannonBarrel != null && mainCannon.transform.localPosition.y > 0.75f);
             if (mainCannonBarrel != null) mainCannonBarrel.layer = 2;
         }
 
@@ -467,6 +471,8 @@ public class RedBoss : MonoBehaviour
 
         } while (explosionTimer < 3);
 
+        Player.instance.StopAllCoroutines();
+        Player.instance.ToggleMove(false);
         camshake.CameraShake(1f, 3f);
         GameObject bigExp = Instantiate(bigExplosion, transform.position, Quaternion.identity);
         Destroy(bigExp, 6f);
@@ -478,7 +484,7 @@ public class RedBoss : MonoBehaviour
         Destroy(this.gameObject);
         flashScreen.CrossFadeAlpha(0, 0.5f, false);        
 
-        Game.game.callEnding();
+        Game.game.CallEnding();
     }
     
 }

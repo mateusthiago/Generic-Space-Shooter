@@ -237,15 +237,14 @@ public class Enemy : MonoBehaviour
             var newExplosion = Instantiate(deathVFX, transform.position, Quaternion.Euler(90, 0, 0));
             Destroy(newExplosion, 2f);
             FindObjectOfType<GameSession>().AddScore(score);
-            DropPowerUp();
-        }        
-
-        if (amILastInSector == true)
+            DropPowerUp();            
+        }
+        if (amILastInSector == true && Game.game.getGameIsOn())
         {
             if (nextSector == 4) FindObjectOfType<Game>().GetComponent<Game>().CallFinalSector();
             else FindObjectOfType<Game>().GetComponent<Game>().SetSectorStarsAndShowBanner(nextSector, 2);
             FindObjectOfType<GameSession>().SetLastSector(nextSector);
-        }              
+        }
 
         Destroy(this.gameObject);
     }

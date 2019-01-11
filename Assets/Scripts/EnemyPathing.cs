@@ -30,8 +30,7 @@ public class EnemyPathing : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (waveConfig)
-            if (!isFiring)
+        if (waveConfig && !isFiring)
                 StartCoroutine(Move());
     }
 
@@ -81,9 +80,8 @@ public class EnemyPathing : MonoBehaviour
                 }
             }
 
-            var enemy = GetComponent<Enemy>(); // verificar se o objeto é um inimigo
-            if (enemy != null) enemy.EnemyDeath(false); // destruir o inimigo corretamente para subtrair do enemyCount em EnemySpawner
-
+            var enemy = GetComponent<Enemy>(); // verificar se o objeto com este script é um inimigo (objetos squad usam este script tbm)
+            if (enemy != null) enemy.EnemyDeath(false); // destruir o inimigo usando a função correta para subtrair do enemyCount em EnemySpawner
             else Destroy(this.gameObject); // destruir o objeto com este script (provavelmente um objeto vazio utilizado para formar squads)
         }
         yield return null;

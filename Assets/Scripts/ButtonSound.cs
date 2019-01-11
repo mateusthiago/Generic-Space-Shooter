@@ -19,13 +19,17 @@ public class ButtonSound : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void OnMouseEnter()
     {
-        GetComponent<AudioSource>().Play();
-        transform.localScale = new Vector3(1.5f, 1.5f, 1);        
+        if (EventSystem.current.currentSelectedGameObject != this.gameObject)
+        {
+            GetComponent<AudioSource>().Play();
+            transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            EventSystem.current.SetSelectedGameObject(this.gameObject);
+        }
     }
 
     void OnMouseExit()
     {
-        transform.localScale = new Vector3(1, 1, 1);
-        EventSystem.current.SetSelectedGameObject(null);
+        //transform.localScale = new Vector3(1, 1, 1);
+        //EventSystem.current.SetSelectedGameObject(null);
     }
 }

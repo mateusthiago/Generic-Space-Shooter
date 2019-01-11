@@ -38,7 +38,7 @@ public class GameSession : MonoBehaviour
     public void AddScore(int addScore)
     {
         score += addScore;
-        FindObjectOfType<Text>().text = score.ToString();
+        GameObject.Find("ScoreDisplay").GetComponent<Text>().text = score.ToString();
         if (score > hiScore)
         {
             hiScore = score;            

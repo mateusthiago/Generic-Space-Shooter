@@ -43,7 +43,7 @@ public class ShieldPickUp : MonoBehaviour {
         {
             player.GetComponent<Player>().PickUpShield();
             FindObjectOfType<GameSession>().AddScore(score);
-            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.5f);
+            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.9f);
             Destroy(this.gameObject);
         }
         

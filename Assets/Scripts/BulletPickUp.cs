@@ -48,7 +48,7 @@ public class BulletPickUp : MonoBehaviour {
         {
             player.GetComponent<Player>().PickUpBullet();
             FindObjectOfType<GameSession>().AddScore(score);
-            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.6f);
+            AudioSource.PlayClipAtPoint(pickupSFX, Camera.main.transform.position, 0.7f);
             Destroy(this.gameObject);
         }
         

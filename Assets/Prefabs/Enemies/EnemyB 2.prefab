@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackSaucerBehavior: 0
+  voidShipBehavior: 0
 --- !u!114 &114780558353319456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d06e5deb77ab2974fbe8414c2493eb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5000
+  health: 4000
   score: 666
   deathVFX: {fileID: 1856868055997316, guid: 599a89c1c1e1a1a44ac6eb8e824531f8, type: 2}
   deathSFX: {fileID: 8300000, guid: 102f1ce16ed18bc4cacf8896f0d7e2b2, type: 3}
@@ -188,6 +189,8 @@ MonoBehaviour:
   blackSaucerBehavior: 0
   redSaucerBehavior: 0
   scoutBehavior: 0
+  voidBehavior: 0
+  destroyerBehavior: 0
   fireCountdown: 0
   minFireDelay: 2
   maxFireDelay: 2
@@ -198,7 +201,7 @@ MonoBehaviour:
     type: 2}
   bulletSFX: {fileID: 8300000, guid: c74873121d479dc4a9282b2933077c46, type: 3}
   bulletVolume: 0.1
-  player: {fileID: 0}
+  voidCharge: {fileID: 0}
 --- !u!212 &212889195341791914
 SpriteRenderer:
   m_ObjectHideFlags: 1
